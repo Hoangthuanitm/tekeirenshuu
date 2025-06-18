@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>て形練習の練習</title>
+    <title>模擬テスト て形練習</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     <style>
         body {
@@ -201,8 +201,8 @@
 </head>
 <body>
     <div class="header">
-        <h1>練習</h1>
-        <h2>て形</h2>
+        <h1>模擬テスト</h1>
+        <h2>て形練習</h2>
     </div>
 
     <div class="student-info">
@@ -315,7 +315,7 @@
         </div>
         <div class="question">
             <p>１８．<ruby>待<rt>ま</rt></ruby>ちます</p>
-            <input type="text" class="answer-input" id="q17" placeholder="て形を入力">
+            <input type="text" class="answer-input" id="q18" placeholder="て形を入力">
             <div class="answer-feedback" id="feedback-18"></div>
         </div>
         <div class="question">
@@ -437,17 +437,29 @@
     </div>
 
     <script>
-        let firebaseLoaded = false;
+        let appLoaded = false;
+        let firestoreLoaded = false;
 
         function firebaseAppLoaded() {
-            firebaseLoaded = true;
-            initializeFirebase();
+            appLoaded = true;
+            checkAllScriptsLoaded();
+        }
+
+        function firebaseFirestoreLoaded() {
+            firestoreLoaded = true;
+            checkAllScriptsLoaded();
+        }
+
+        function checkAllScriptsLoaded() {
+            if (appLoaded && firestoreLoaded) {
+                initializeFirebase();
+            }
         }
 
         function initializeFirebase() {
-            if (!firebaseLoaded || typeof firebase === 'undefined') {
-                console.error('Firebase SDK not loaded');
-                document.getElementById('message-result').textContent = 'Lỗi: Không thể tải Firebase SDK. Vui lòng thử lại sau.';
+            if (!appLoaded || !firestoreLoaded || typeof firebase === 'undefined' || typeof firebase.firestore !== 'function') {
+                console.error('Firebase SDK or Firestore not loaded');
+                document.getElementById('message-result').textContent = 'Lỗi: Không thể tải Firebase SDK hoặc Firestore. Vui lòng thử lại sau.';
                 return;
             }
 
@@ -534,7 +546,7 @@
             19: "はなして", 20: "けして", 21: "たべて",
             22: "ねて", 23: "おしえて", 24: "みせて",
             25: "あけて", 26: "しめて", 27: "つけて",
-            28: "みて", 29: "いって", 30: "おきて",
+            28: "みて", 29: "いって", 30: "おkite",
             31: "かりて", 32: "して", 33: "べんきょうして",
             34: "さんぽして", 35: "かいものして", 36: "しょくじして",
             37: "きて"
@@ -609,10 +621,9 @@
 
         // Initialize Firebase when the window loads
         window.onload = function() {
-            if (firebaseLoaded) {
+            if (appLoaded && firestoreLoaded) {
                 initializeFirebase();
             } else {
-                // If Firebase hasn't loaded yet, wait for the onload event of the script
                 document.getElementById('message-result').textContent = 'Đang tải Firebase SDK...';
             }
         };
@@ -620,6 +631,6 @@
 
     <!-- Firebase SDK -->
     <script src="https://cdn.jsdelivr.net/npm/firebase@9.22.0/firebase-app-compat.js" onload="firebaseAppLoaded()"></script>
-    <script src="https://cdn.jsdelivr.net/npm/firebase@9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/firebase@9.22.0/firebase-firestore-compat.js" onload="firebaseFirestoreLoaded()"></script>
 </body>
 </html>
