@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>て形練習の練習</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans JP', 'Roboto', sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #F5F7FA;
+            font-size: 16px;
+            line-height: 1.6;
+            color: #333;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 15px;
+            background-color: #FFFFFF;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        }
+        .header h1 {
+            font-size: 1.8em;
+            margin: 0;
+            color: #4A90E2;
+        }
+        .header h2 {
+            font-size: 1.4em;
+            margin: 10px 0;
+            color: #333;
+        }
+        .student-info {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 20px;
+            border: 1px solid #E0E4EA;
+            padding: 15px;
+            border-radius: 10px;
+            background-color: #FFFFFF;
+        }
+        .student-info div {
+            margin: 10px 0;
+        }
+        .student-info label {
+            font-weight: 500;
+            color: #4A90E2;
+            display: block;
+        }
+        .student-info input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #D1D5DB;
+            border-radius: 6px;
+            font-family: 'Roboto', sans-serif;
+            font-size: 16px;
+            transition: border-color 0.2s;
+            box-sizing: border-box;
+        }
+        .student-info input:focus {
+            border-color: #4A90E2;
+            outline: none;
+        }
+        .question-section {
+            margin-bottom: 30px;
+            background-color: #FFFFFF;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        }
+        h2 {
+            background-color: #4A90E2;
+            color: #FFFFFF;
+            padding: 12px 15px;
+            border-radius: 8px;
+            font-size: 1.3em;
+            margin-top: 0;
+        }
+        .question {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #E0E4EA;
+        }
+        .answer-input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #D1D5DB;
+            border-radius: 6px;
+            font-family: 'Roboto', sans-serif;
+            font-size: 16px;
+            margin-top: 10px;
+            box-sizing: border-box;
+        }
+        .answer-input:focus {
+            border-color: #4A90E2;
+            outline: none;
+        }
+        .answer-feedback {
+            margin-top: 8px;
+            font-size: 0.9em;
+            color: #4A90E2;
+        }
+        .answer-feedback.wrong {
+            color: #EF4444;
+        }
+        button {
+            background-color: #4A90E2;
+            color: #FFFFFF;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 20px;
+            font-size: 1em;
+            font-family: 'Roboto', sans-serif;
+            transition: background-color 0.2s, transform 0.1s;
+            margin-right: 10px;
+        }
+        button:hover {
+            background-color: #357ABD;
+            transform: translateY(-1px);
+        }
+        button.reset {
+            background-color: #EF4444;
+        }
+        button.reset:hover {
+            background-color: #DC2626;
+        }
+        .error-message {
+            color: #EF4444;
+            margin-top: 15px;
+            font-size: 0.95em;
+        }
+        .result-section {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #FFFFFF;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            display: none;
+            text-align: center;
+        }
+        .result-section p {
+            margin: 8px 0;
+            font-size: 1em;
+            color: #333;
+        }
+        .button-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+        .password-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+        .password-box {
+            background-color: #FFFFFF;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+        }
+        .password-box input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #D1D5DB;
+            border-radius: 6px;
+            font-family: 'Roboto', sans-serif;
+            font-size: 16px;
+        }
+        .password-box button {
+            margin: 10px 5px;
+        }
+        .password-error {
+            color: #EF4444;
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+        ruby rt {
+            font-size: 0.7em;
+            color: #6B7280;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>練習</h1>
+        <h2>て形</h2>
+    </div>
+
+    <div class="student-info">
+        <div>
+            <label for="name">名前（なまえ）:</label>
+            <input type="text" id="name" name="name">
+        </div>
+        <div>
+            <label for="class">クラス:</label>
+            <input type="text" id="class" name="class">
+        </div>
+        <div>
+            <label for="date">日付:</label>
+            <input type="date" id="date" name="date" value="2025-06-19">
+        </div>
+    </div>
+
+    <div class="button-container">
+        <button id="start-test" type="button">Bắt đầu làm bài</button>
+        <button id="history-test" type="button" onclick="window.showPasswordModal()">Lịch sử kiểm tra</button>
+    </div>
+    <div id="message-info" class="error-message"></div>
+
+    <div class="question-section" style="display: none;">
+        <h2>問題．て形にしてください。</h2>
+        <div class="question">
+            <p>１．<ruby>書<rt>か</rt></ruby>きます</p>
+            <input type="text" class="answer-input" id="q1" placeholder="て形を入力">
+            <div class="answer-feedback" id="feedback-1"></div>
+        </div>
+        <div class="question">
+            <p>２．<ruby>聞<rt>き</rt></ruby>きます</p>
+            <input type="text" class="answer-input" id="q2" placeholder="て形を入力">
+            <div class="answer-feedback" id="feedback-2"></div>
+        </div>
+        <div class="question">
+            <p>３．<ruby>行<rt>い</rt></ruby>きます</p>
+            <input type="text" class="answer-input" id="q3" placeholder="て形を入力">
+            <div class="answer-feedback" id="feedback-3"></div>
+        </div>
+        <div class="question">
+            <p>４．<ruby>急<rt>いそ</rt></ruby>ぎます</p>
+            <input type="text" class="answer-input" id="q4" placeholder="て形を入力">
+            <div class="answer-feedback" id="feedback-4"></div>
+        </div>
+        <div class="question">
+            <p>５．<ruby>泳<rt>およ</rt></ruby>ぎます</p>
+            <input type="text" class="answer-input" id="q5" placeholder="て形を入力">
+            <div class="answer-feedback" id="feedback-5"></div>
+        </div>
+        <div class="question">
+            <p>６．<ruby>飲<rt>の</rt></ruby>みます</p>
+            <input type="text" class="answer-input" id="q6" placeholder="て形を入力">
+            <div class="answer-feedback" id="feedback-6"></div>
+        </div>
+        <div class="question">
+            <p>７．<ruby>読<rt>よ</rt></ruby>みます</p>
+            <input type="text" class="answer-input" id="q7" placeholder="て形を入力">
+            <div class="answer-feedback" id="feedback-7"></div>
+        </div>
+        <div class="question">
+            <p>８．<ruby>休<rt>やす</rt></ruby>みます</p>
+            <input type="text" class="answer-input" id="q8" placeholder="て形を入力">
+            <div class="answer-feedback" id="feedback-8"></div>
+        </div>
+        <div class="question">
+            <p>９．<ruby>呼<rt>よ</rt></ruby>びます</p>
+            <input type="text" class="answer-input" id="q9" placeholder="て形を入力">
+            <div class="answer-feedback" id="feedback-9"></div>
+        </div>
+        <div class="question">
+            <p>１０．<ruby>遊<rt>あそ</rt></ruby>びます</p>
+            <input type="text" class="answer-input" id="q10" placeholder="て形を入力">
+            <div class="answer-feedback" id="feedback-10"></div>
+        </div>
+        <div class="question">
+            <p>１１．<ruby>帰<rt>かえ</rt></ruby>ります</p>
+            <input type="text" class="answer-input" id="q11" placeholder="て形を入力">
+            <div class="answer-feedback" id="feedback-11"></div>
+        </div>
+        <div class="question">
+            <p>１２．<ruby>取<rt>と</rt></ruby>ります</p>
+            <input type="text" class="answer-input" id="q12" placeholder="て形を入力">
+            <div class="answer-feedback" id="feedback-12"></div>
+        </div>
+        <div class="question">
+            <p>１３．<ruby>か<rt>か</rt></ruby>かります</p>
+            <input type="text" class="answer-input" id="q13" placeholder="て形を入力">
+            <div class="answer-feedback" id="feedback-13"></div>
+        </div>
+        <div class="question">
+            <p>１４．<ruby>買<rt>か</rt></ruby>います</p>
+            <input type="text" class="answer-input" id="q14" placeholder="て形を入力">
+            <div class="answer-feedback" id="feedback-14"></div>
+        </div>
+        <div class="question">
+            <p>１５．<ruby>会<rt>あ</rt></ruby>います</p>
+            <input type="text" class="answer-input" id="q15" placeholder="て形を入力">
+            <div class="answer-feedback" id="feedback-15"></div>
+        </div>
+        <div class="question">
+            <p>１６．<ruby>習<rt>なら</rt></ruby>います</p>
+            <input type="text" class="answer-input" id="q16" placeholder="て形を入力">
+            <div class="answer-feedback" id="feedback-16"></div>
+        </div>
+        <div class="question">
+            <p>１７．<ruby>持<rt>も</rt></ruby>ちます</p>
+            <input type="text" class="answer-input" id="q17" placeholder="て形を入力">
+            <div class="answer-feedback" id="feedback-17"></div>
+        </div>
+        <div class="question">
+            <p>１８．<ruby>待<rt>ま</rt></ruby>ちます</p>
+            <input type="text" class="answer-input" id="q17" placeholder="て形を入力">
+            <div class="answer-feedback" id="feedback-18"></div>
+        </div>
+        <div class="question">
+            <p>１９．<ruby>話<rt>はな</rt></ruby>します</p>
+            <input type="text" class="answer-input" id="q19" placeholder="て形を入力">
+            <div class="answer-feedback" id="feedback-19"></div>
+        </div>
+        <div class="question">
+            <p>２０．<ruby>消<rt>け</rt></ruby>します</p>
+            <input type="text" class="answer-input" id="q20" placeholder="て形を入力">
+            <div class="answer-feedback" id="feedback-20"></div>
+        </div>
+        <div class="question">
+            <p>２１．<ruby>食<rt>た</rt></ruby>べます</p>
+            <input type="text" class="answer-input" id="q21" placeholder="て形を入力">
+            <div class="answer-feedback" id="feedback-21"></div>
+        </div>
+        <div class="question">
+            <p>２２．<ruby>寝<rt>ね</rt></ruby>ます</p>
+            <input type="text" class="answer-input" id="q22" placeholder="て形を入力">
+            <div class="answer-feedback" id="feedback-22"></div>
+        </div>
+        <div class="question">
+            <p>２３．<ruby>教<rt>おし</rt></ruby>えます</p>
+            <input type="text" class="answer-input" id="q23" placeholder="て形を入力">
+            <div class="answer-feedback" id="feedback-23"></div>
+        </div>
+        <div class="question">
+            <p>２４．<ruby>見<rt>み</rt></ruby>せます</p>
+            <input type="text" class="answer-input" id="q24" placeholder="て形を入力">
+            <div class="answer-feedback" id="feedback-24"></div>
+        </div>
+        <div class="question">
+            <p>２５．<ruby>開<rt>あ</rt></ruby>けます</p>
+            <input type="text" class="answer-input" id="q25" placeholder="て形を入力">
+            <div class="answer-feedback" id="feedback-25"></div>
+        </div>
+        <div class="question">
+            <p>２６．<ruby>閉<rt>し</rt></ruby>めます</p>
+            <input type="text" class="answer-input" id="q26" placeholder="て形を入力">
+            <div class="answer-feedback" id="feedback-26"></div>
+        </div>
+        <div class="question">
+            <p>２７．<ruby>つ<rt>つ</rt></ruby>けます</p>
+            <input type="text" class="answer-input" id="q27" placeholder="て形を入力">
+            <div class="answer-feedback" id="feedback-27"></div>
+        </div>
+        <div class="question">
+            <p>２８．<ruby>見<rt>み</rt></ruby>ます</p>
+            <input type="text" class="answer-input" id="q28" placeholder="て形を入力">
+            <div class="answer-feedback" id="feedback-28"></div>
+        </div>
+        <div class="question">
+            <p>２９．<ruby>い<rt>い</rt></ruby>ます</p>
+            <input type="text" class="answer-input" id="q29" placeholder="て形を入力">
+            <div class="answer-feedback" id="feedback-29"></div>
+        </div>
+        <div class="question">
+            <p>３０．<ruby>起<rt>お</rt></ruby>きます</p>
+            <input type="text" class="answer-input" id="q30" placeholder="て形を入力">
+            <div class="answer-feedback" id="feedback-30"></div>
+        </div>
+        <div class="question">
+            <p>３１．<ruby>借<rt>か</rt></ruby>ります</p>
+            <input type="text" class="answer-input" id="q31" placeholder="て形を入力">
+            <div class="answer-feedback" id="feedback-31"></div>
+        </div>
+        <div class="question">
+            <p>３２．<ruby>し<rt>し</rt></ruby>ます</p>
+            <input type="text" class="answer-input" id="q32" placeholder="て形を入力">
+            <div class="answer-feedback" id="feedback-32"></div>
+        </div>
+        <div class="question">
+            <p>３３．<ruby>勉強<rt>べんきょう</rt></ruby>します</p>
+            <input type="text" class="answer-input" id="q33" placeholder="て形を入力">
+            <div class="answer-feedback" id="feedback-33"></div>
+        </div>
+        <div class="question">
+            <p>３４．<ruby>散歩<rt>さんぽ</rt></ruby>します</p>
+            <input type="text" class="answer-input" id="q34" placeholder="て形を入力">
+            <div class="answer-feedback" id="feedback-34"></div>
+        </div>
+        <div class="question">
+            <p>３５．<ruby>買い物<rt>かいもの</rt></ruby>します</p>
+            <input type="text" class="answer-input" id="q35" placeholder="て形を入力">
+            <div class="answer-feedback" id="feedback-35"></div>
+        </div>
+        <div class="question">
+            <p>３６．<ruby>食事<rt>しょくじ</rt></ruby>します</p>
+            <input type="text" class="answer-input" id="q36" placeholder="て形を入力">
+            <div class="answer-feedback" id="feedback-36"></div>
+        </div>
+        <div class="question">
+            <p>３７．<ruby>来<rt>き</rt></ruby>ます</p>
+            <input type="text" class="answer-input" id="q37" placeholder="て形を入力">
+            <div class="answer-feedback" id="feedback-37"></div>
+        </div>
+    </div>
+
+    <button id="submit-test" type="button" style="display: none;">テストを提出する</button>
+    <button id="reset-test" type="button" class="reset" style="display: none;">Làm lại</button>
+    <div id="message-result" class="error-message"></div>
+
+    <div class="result-section" id="results">
+        <h2>採点結果 (Kết quả)</h2>
+        <div id="score-display"></div>
+    </div>
+
+    <div class="password-modal" id="password-modal">
+        <div class="password-box">
+            <h2>Nhập mật khẩu</h2>
+            <input type="password" id="password-input" placeholder="Mật khẩu">
+            <div>
+                <button onclick="window.checkPassword()">Xác nhận</button>
+                <button onclick="window.closePasswordModal()">Hủy</button>
+            </div>
+            <div id="password-error" class="password-error"></div>
+        </div>
+    </div>
+
+    <script>
+        let firebaseLoaded = false;
+
+        function firebaseAppLoaded() {
+            firebaseLoaded = true;
+            initializeFirebase();
+        }
+
+        function initializeFirebase() {
+            if (!firebaseLoaded || typeof firebase === 'undefined') {
+                console.error('Firebase SDK not loaded');
+                document.getElementById('message-result').textContent = 'Lỗi: Không thể tải Firebase SDK. Vui lòng thử lại sau.';
+                return;
+            }
+
+            // Firebase configuration
+            const firebaseConfig = {
+                apiKey: "AIzaSyAfy4QMD9_7PyFHpInNdKDRWuW4AYCtLJ4",
+                authDomain: "history-e4633.firebaseapp.com",
+                projectId: "history-e4633",
+                storageBucket: "history-e4633.firebasestorage.app",
+                messagingSenderId: "331974436893",
+                appId: "1:331974436893:web:10c3c6adf7b66d2b5fbef4",
+                measurementId: "G-DC055090BW"
+            };
+
+            // Initialize Firebase
+            firebase.initializeApp(firebaseConfig);
+            const db = firebase.firestore();
+
+            // Define saveTestResult after Firebase initialization
+            async function saveTestResult(name, className, date, score, percentage) {
+                try {
+                    await db.collection('testHistorytekeirenshuu').add({
+                        name: name,
+                        class: className,
+                        date: date,
+                        score: score,
+                        percentage: percentage,
+                        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                    console.log('Test result saved successfully');
+                } catch (error) {
+                    console.error('Error saving test result: ', error);
+                    document.getElementById('message-result').textContent = 'Lỗi khi lưu kết quả vào Firestore. Vui lòng thử lại.';
+                }
+            }
+
+            // Define checkAnswers to use saveTestResult
+            function checkAnswers() {
+                const name = document.getElementById('name').value.trim();
+                const className = document.getElementById('class').value.trim();
+                const date = document.getElementById('date').value;
+                let score = 0;
+                const totalQuestions = 37;
+
+                for (let i = 1; i <= totalQuestions; i++) {
+                    const userAnswer = document.getElementById(`q${i}`).value.trim();
+                    const feedbackElement = document.getElementById(`feedback-${i}`);
+                    if (userAnswer === answerKey[i]) {
+                        feedbackElement.textContent = "正しい!";
+                        feedbackElement.classList.remove("wrong");
+                        score++;
+                    } else {
+                        feedbackElement.textContent = `間違っています。正しい答え: ${answerKey[i]}`;
+                        feedbackElement.classList.add("wrong");
+                    }
+                }
+
+                const percentage = (score / totalQuestions) * 100;
+                document.getElementById("message-result").textContent = '';
+                document.getElementById("score-display").innerHTML = `
+                    <button id="history-test-result" onclick="window.showPasswordModal()">Lịch sử kiểm tra</button>
+                    <button id="reset-test-result" class="reset" onclick="window.resetTest()">Làm lại</button>
+                    <p>得点: ${score} / ${totalQuestions} (${percentage.toFixed(1)}%)</p>
+                `;
+                document.getElementById("results").style.display = "block";
+                document.getElementById("submit-test").style.display = "none";
+                document.getElementById("reset-test").style.display = "none";
+
+                // Save the test result to Firestore
+                saveTestResult(name, className, date, score, percentage);
+            }
+
+            // Attach event listener for submit button
+            document.getElementById('submit-test').addEventListener('click', checkAnswers);
+        }
+
+        const answerKey = {
+            1: "かいて", 2: "きいて", 3: "いって",
+            4: "いそいで", 5: "およいで", 6: "のんで",
+            7: "よんで", 8: "やすんで", 9: "よんで", // Corrected for 呼びます
+            10: "あそんで", 11: "かえって", 12: "とって",
+            13: "かかって", 14: "かって", 15: "あって",
+            16: "ならって", 17: "もって", 18: "まって",
+            19: "はなして", 20: "けして", 21: "たべて",
+            22: "ねて", 23: "おしえて", 24: "みせて",
+            25: "あけて", 26: "しめて", 27: "つけて",
+            28: "みて", 29: "いって", 30: "おきて",
+            31: "かりて", 32: "して", 33: "べんきょうして",
+            34: "さんぽして", 35: "かいものして", 36: "しょくじして",
+            37: "きて"
+        };
+
+        function checkPassword() {
+            const passwordInput = document.getElementById('password-input').value.trim();
+            const passwordError = document.getElementById('password-error');
+            if (passwordInput === '112') {
+                window.location.href = 'history.html';
+            } else {
+                passwordError.textContent = 'Mật khẩu không đúng. Vui lòng thử lại.';
+                document.getElementById('password-input').value = '';
+            }
+        }
+
+        function showPasswordModal() {
+            document.getElementById('password-modal').style.display = 'flex';
+            document.getElementById('password-input').focus();
+        }
+
+        function closePasswordModal() {
+            document.getElementById('password-modal').style.display = 'none';
+            document.getElementById('password-input').value = '';
+            document.getElementById('password-error').textContent = '';
+        }
+
+        function resetTest() {
+            document.getElementById('name').value = '';
+            document.getElementById('class').value = '';
+            document.getElementById('date').value = '2025-06-19';
+            document.getElementById('message-info').textContent = '';
+            document.getElementById('message-result').textContent = '';
+            document.getElementById('results').style.display = 'none';
+            document.getElementById('score-display').innerHTML = '';
+            document.getElementById('start-test').style.display = 'inline-block';
+            document.getElementById('history-test').style.display = 'inline-block';
+            document.querySelector('.button-container').style.display = 'flex';
+            document.querySelector('.question-section').style.display = 'none';
+            document.getElementById('submit-test').style.display = 'none';
+            document.getElementById('reset-test').style.display = 'none';
+            document.querySelectorAll('.answer-input').forEach(input => input.value = '');
+            document.querySelectorAll('.answer-feedback').forEach(feedback => {
+                feedback.textContent = '';
+                feedback.classList.remove('wrong');
+            });
+        }
+
+        window.checkPassword = checkPassword;
+        window.showPasswordModal = showPasswordModal;
+        window.closePasswordModal = closePasswordModal;
+        window.resetTest = resetTest;
+
+        document.getElementById('start-test').addEventListener('click', () => {
+            const name = document.getElementById('name').value.trim();
+            const className = document.getElementById('class').value.trim();
+            const dateInput = document.getElementById('date').value;
+            const messageInfo = document.getElementById('message-info');
+
+            if (!name || !className || !dateInput) {
+                messageInfo.textContent = 'Vui lòng điền đầy đủ thông tin: Tên, Lớp, và Ngày.';
+                return;
+            }
+
+            messageInfo.textContent = '';
+            document.getElementById('start-test').style.display = 'none';
+            document.getElementById('history-test').style.display = 'none';
+            document.querySelector('.button-container').style.display = 'none';
+            document.querySelector('.question-section').style.display = 'block';
+            document.getElementById('submit-test').style.display = 'block';
+        });
+
+        // Initialize Firebase when the window loads
+        window.onload = function() {
+            if (firebaseLoaded) {
+                initializeFirebase();
+            } else {
+                // If Firebase hasn't loaded yet, wait for the onload event of the script
+                document.getElementById('message-result').textContent = 'Đang tải Firebase SDK...';
+            }
+        };
+    </script>
+
+    <!-- Firebase SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/firebase@9.22.0/firebase-app-compat.js" onload="firebaseAppLoaded()"></script>
+    <script src="https://cdn.jsdelivr.net/npm/firebase@9.22.0/firebase-firestore-compat.js"></script>
+</body>
+</html>
