@@ -152,7 +152,7 @@
             margin: 8px 0;
             font-size: 1em;
             color: #333;
-         }
+        }
         .rank-A {
             color: #4A90E2;
             font-weight: 500;
@@ -240,10 +240,6 @@
             color: #EF4444;
             font-weight: 500;
         }
-        /* Ẩn nút Làm lại ban đầu */
-        #reset-test {
-            display: none !important;
-        }
     </style>
 </head>
 <body>
@@ -263,7 +259,7 @@
         </div>
         <div>
             <label for="date">日付:</label>
-            <input type="date" id="date" name="date" value="2025-06-19">
+            <input type="date" id="date" name="date" value="2025-06-20">
         </div>
     </div>
 
@@ -464,7 +460,7 @@
 
     <div class="question-section" id="section-2" style="display: none;">
         <h2>問題２．て形と「〜てください」を組み合わせてください。</h2>
-        <h2>Hãy kết hợp thể Te với mẫu てください　</h2>
+        <h2>Hãy kết hợp thể Te với mẫu てください</h2>
         <div class="example">
             <p>れい）<ruby>電気<rt>でんき</rt></ruby>を<ruby>付<rt>つ</rt></ruby>けます。</p>
             <p>→ <ruby>電気<rt>でんき</rt></ruby>を<span class="highlight"><ruby>付<rt>つ</rt></ruby>けてください</span>。
@@ -499,7 +495,7 @@
 
     <div class="question-section" id="section-3" style="display: none;">
         <h2>問題３．て形と「〜ています」を組み合わせてください。</h2>
-        <h2>Hãy kết hợp thể Te với mẫu ています　</h2>
+        <h2>Hãy kết hợp thể Te với mẫu ています</h2>
         <div class="example">
             <p>れい）<ruby>今<rt>いま</rt></ruby>、<ruby>日本語<rt>にほんgo</rt></ruby>を<ruby>勉強<rt>べんきょう</rt></ruby>します。</p>
             <p>→ <ruby>今<rt>いま</rt></ruby>、<ruby>日本語<rt>にほんご</rt></ruby>を<span class="highlight"><ruby>勉強<rt>べんきょう</rt></ruby>しています</span>。
@@ -569,7 +565,7 @@
 
     <div class="question-section" id="section-5" style="display: none;">
         <h2>問題５．て形を使って「V1てから、V2」を作ってください。</h2>
-        <h2>Hãy kết hợp thể Te với mẫu 「V1てから、V2」　</h2>
+        <h2>Hãy kết hợp thể Te với mẫu 「V1てから、V2」</h2>
         <div class="example">
             <p>れい）<ruby>日本語<rt>にほんご</rt></ruby>を<ruby>勉強<rt>べんきょう</rt></ruby>します。<ruby>ごはん<rt>ごはん</rt></ruby>を<ruby>食<rt>た</rt></ruby>べます。</p>
             <p>→ <ruby>日本語<rt>にほんご</rt></ruby>を<span class="highlight"><ruby>勉強<rt>べんきょう</rt></ruby>してから、</span><ruby>ごはん<rt>ごはん</rt></ruby>を<ruby>食<rt>た</rt></ruby>べます。Sau khi học tiếng nhật thì tôi ăn cơm</p>
@@ -696,6 +692,8 @@
         // Initialize Firebase loading flags
         let appLoaded = false;
         let firestoreLoaded = false;
+        let startTime = null;
+        let endTime = null;
 
         // Firebase script load handlers
         function firebaseAppLoaded() {
@@ -715,16 +713,13 @@
             }
         }
 
-        // Format date and time
+        // Format date and time to show only hours and minutes
         function formatDateTime(date) {
+            if (!date) return 'N/A';
             return date.toLocaleString('vi-VN', {
-                year: 'numeric',
-                month: '2-digit',
-                day: '2-digit',
                 hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit'
-            });
+                minute: '2-digit'
+            }).replace(/\s/g, '');
         }
 
         // Initialize Firebase
@@ -752,6 +747,10 @@
 
             // Save test result to Firestore
             async function saveTestResult(name, className, date, sectionScores, totalScore, percentage, ranking, startTime, endTime) {
+                if (!startTime) {
+                    startTime = formatDateTime(new Date());
+                    console.log("startTime was null, set to: ", startTime);
+                }
                 try {
                     await db.collection('testHistorytekeirenshuu').add({
                         name: name,
@@ -773,10 +772,11 @@
             }
 
             // Check answers and display results
-            let startTime = null;
-            let endTime = null;
-
             function checkAnswers() {
+                if (!startTime) {
+                    startTime = formatDateTime(new Date());
+                    console.log("startTime initialized on submit: ", startTime);
+                }
                 const name = document.getElementById('name').value.trim();
                 const className = document.getElementById('class').value.trim();
                 const dateInput = document.getElementById('date').value;
@@ -785,13 +785,13 @@
                 let totalScore = 0;
                 const totalQuestions = 67;
                 const sectionRanges = {
-                    section1: { start: 1, end: 37, total: 37 }, // 問題 I
-                    section2: { start: 38, end: 42, total: 5 }, // 問題 II
-                    section3: { start: 43, end: 47, total: 5 }, // 問題 III
-                    section4: { start: 48, end: 52, total: 5 }, // 問題 IV
-                    section5: { start: 53, end: 57, total: 5 }, // 問題 V
-                    section6: { start: 58, end: 62, total: 5 }, // 問題 VI
-                    section7: { start: 63, end: 67, total: 5 }  // 問題 VII
+                    section1: { start: 1, end: 37, total: 37 },
+                    section2: { start: 38, end: 42, total: 5 },
+                    section3: { start: 43, end: 47, total: 5 },
+                    section4: { start: 48, end: 52, total: 5 },
+                    section5: { start: 53, end: 57, total: 5 },
+                    section6: { start: 58, end: 62, total: 5 },
+                    section7: { start: 63, end: 67, total: 5 }
                 };
 
                 let sectionScores = {
@@ -811,22 +811,13 @@
                         feedbackElement.textContent = "正しい！";
                         feedbackElement.classList.remove("wrong");
                         totalScore++;
-                        // Increment section score
-                        if (i >= sectionRanges.section1.start && i <= sectionRanges.section1.end) {
-                            sectionScores.section1++;
-                        } else if (i >= sectionRanges.section2.start && i <= sectionRanges.section2.end) {
-                            sectionScores.section2++;
-                        } else if (i >= sectionRanges.section3.start && i <= sectionRanges.section3.end) {
-                            sectionScores.section3++;
-                        } else if (i >= sectionRanges.section4.start && i <= sectionRanges.section4.end) {
-                            sectionScores.section4++;
-                        } else if (i >= sectionRanges.section5.start && i <= sectionRanges.section5.end) {
-                            sectionScores.section5++;
-                        } else if (i >= sectionRanges.section6.start && i <= sectionRanges.section6.end) {
-                            sectionScores.section6++;
-                        } else if (i >= sectionRanges.section7.start && i <= sectionRanges.section7.end) {
-                            sectionScores.section7++;
-                        }
+                        if (i >= sectionRanges.section1.start && i <= sectionRanges.section1.end) sectionScores.section1++;
+                        else if (i >= sectionRanges.section2.start && i <= sectionRanges.section2.end) sectionScores.section2++;
+                        else if (i >= sectionRanges.section3.start && i <= sectionRanges.section3.end) sectionScores.section3++;
+                        else if (i >= sectionRanges.section4.start && i <= sectionRanges.section4.end) sectionScores.section4++;
+                        else if (i >= sectionRanges.section5.start && i <= sectionRanges.section5.end) sectionScores.section5++;
+                        else if (i >= sectionRanges.section6.start && i <= sectionRanges.section6.end) sectionScores.section6++;
+                        else if (i >= sectionRanges.section7.start && i <= sectionRanges.section7.end) sectionScores.section7++;
                     } else {
                         feedbackElement.textContent = `間違っています。正しい答え: ${answerKey[i]}`;
                         feedbackElement.classList.add("wrong");
@@ -835,21 +826,14 @@
 
                 const percentage = (totalScore / totalQuestions) * 100;
                 let ranking = '';
-                if (percentage >= 85) {
-                    ranking = 'A)';
-                } else if (percentage >= 70) {
-                    ranking = 'B';
-                } else if (percentage >= 60) {
-                    ranking = 'C';
-                    } else if (percentage >= 55) {
-                    ranking = 'D';
-                } else {
-                    ranking = 'F';
-                }
+                if (percentage >= 85) ranking = 'A';
+                else if (percentage >= 70) ranking = 'B';
+                else if (percentage >= 60) ranking = 'C';
+                else if (percentage >= 55) ranking = 'D';
+                else ranking = 'F';
 
                 document.getElementById("message-result").textContent = '';
                 document.getElementById("score-display").innerHTML = `
-                  
                     <div class="student-details">
                         <p><strong>Tên:</strong> ${name}</p>
                         <p><strong>Lớp:</strong> ${className}</p>
@@ -869,7 +853,6 @@
                                 <th>Tỷ lệ</th>
                                 <th>Xếp loại</th>
                             </tr>
-                            
                         </thead>
                         <tbody>
                             <tr>
@@ -882,11 +865,11 @@
                                 <td>${sectionScores.section7}/${sectionRanges.section7.total}</td>
                                 <td>${totalScore}/${totalQuestions}</td>
                                 <td>${percentage.toFixed(1)}%</td>
-                                <td>${ranking}</td>
+                                <td class="${ranking === 'A' ? 'rank-A' : ranking === 'F' ? 'rank-F' : ''}">${ranking}</td>
                             </tr>
                         </tbody>
                     </table>
-                     <div class="button-container">
+                    <div class="button-container">
                         <button id="history-test-result">Lịch sử kiểm tra</button>
                         <button id="reset-test-result" class="reset">Làm lại</button>
                     </div>
@@ -896,194 +879,186 @@
                 document.getElementById("reset-test").style.display = "none";
                 document.getElementById('reset-test-result').style.display = 'inline-block';
 
-                // Re-attach event listeners for result buttons
                 document.getElementById('history-test-result').addEventListener('click', showPasswordModal);
                 document.getElementById('reset-test-result').addEventListener('click', resetTest);
 
-                // Save the test result
                 saveTestResult(name, className, dateInput, sectionScores, totalScore, percentage, ranking, startTime, endTime);
             }
 
-            // Attach submit event listener
-            document.getElementById('submit-test').addEventListener('click', checkAnswers);
-        }
+            // Answer key for all questions
+            const answerKey = {
+                1: "かいて",
+                2: "きいて",
+                3: "いって",
+                4: "いそいで",
+                5: "およいで",
+                6: "のんで",
+                7: "よんで",
+                8: "やすんで",
+                9: "よんで",
+                10: "あそんで",
+                11: "かえって",
+                12: "とって",
+                13: "かかって",
+                14: "かって",
+                15: "あって",
+                16: "ならって",
+                17: "もって",
+                18: "まって",
+                19: "はなして",
+                20: "けして",
+                21: "たべて",
+                22: "ねて",
+                23: "おしえて",
+                24: "みせて",
+                25: "あけて",
+                26: "しめて",
+                27: "つけて",
+                28: "みて",
+                29: "いて",
+                30: "おきて",
+                31: "かりて",
+                32: "して",
+                33: "べんきょうして",
+                34: "さんぽして",
+                35: "かいものして",
+            36: "しょくじして",
+            37: "きて",
+            38: "ほんをよんでください。",
+            39: "ドアをあけてください。",
+            40: "おんがくをきいてください。",
+            41: "にほんごではなしてください。",
+            42: "みずをのんでください。",
+            43: "いま、ほんをよんでいます。",
+            44: "いま、テレビをみています。",
+            45: "いま、ともだちとはなしています。",
+            46: "いま、プールでおよいでいます。",
+            47: "いま、かい物しています。",
+            48: "ほんをよんで、ねます。",
+            49: "かい物して、いえにかえります。",
+            50: "テレビをみて、しょくじします。",
+            51: "こうえんをさんぽして、ともだちにあいます。",
+            52: "にほんごをべんきょうして、おんがくをききます。",
+            53: "ほんをよんでから、ねます。",
+            54: "かい物してから、いえにかえります。",
+            55: "テレビをみてから、しょくじします。",
+            56: "こうえんをさんぽしてから、ともだちにあいます。",
+            57: "にほんごをべんきょうしてから、おんがくをききます。",
+            58: "ほんをよんでもいいですか。",
+            59: "ドアをあけてもいいですか。",
+            60: "おんがくをきいてもいいですか。",
+            61: "にほんごではなしてもいいですか。",
+            62: "みずをのんでもいいですか。",
+            63: "ほんをよんではいけません。",
+            64: "ドアをあけてはいけません。",
+            65: "おんがくをきいてはいけません。",
+            66: "にほんごではなしてはいけません。",
+            67: "みずをのんではいけません。"
+            };
 
-        // Answer key for all questions
-        const answerKey = {
-            1: "かいて", // 書きます
-            2: "きいて", // 聞きます
-            3: "いって", // 行きます
-            4: "いそいで", // 急ぎます
-            5: "およいで", // 泳ぎます
-            6: "のんで", // 飲みます
-            7: "よんで", // 読みます
-            8: "やすんで", // 休みます
-            9: "よんで", // 呼びます
-            10: "あそんで", // 遊びます
-            11: "かえって", // 帰ります
-            12: "とって", // 取ります
-            13: "かかって", // かかります
-            14: "かって", // 買います
-            15: "あって", // 会います
-            16: "ならって", // 習います
-            17: "もって", // 持ちます
-            18: "まって", // 待ちます
-            19: "はなして", // 話します
-            20: "けして", // 消します
-            21: "たべて", // 食べます
-            22: "ねて", // 寝ます
-            23: "おしえて", // 教えます
-            24: "みせて", // 見せます
-            25: "あけて", // 開けます
-            26: "しめて", // 閉めます
-            27: "つけて", // つけます
-            28: "みて", // 見ます
-            29: "いて", // います
-            30: "おきて", // 起きます
-            31: "かりて", // 借ります
-            32: "して", // します
-            33: "べんきょうして", // 勉強します
-            34: "さんぽして", // 散歩します
-            35: "かいものして", // 買い物します
-            36: "しょくじして", // 食事します
-            37: "きて", // 来ます
-            38: "ほんをよんでください。", // 本を読みます
-            39: "ドアをあけてください。", // ドアを開けます
-            40: "おんがくをきいてください。", // 音楽を聞きます
-            41: "にほんごではなしてください。", // 日本語で話します
-            42: "みずをのんでください。", // 水を飲みます
-            43: "いま、ほんをよんでいます。", // 本を読んでいます
-            44: "いま、テレビをみています。", // テレビを見ています
-            45: "いま、ともだちとはなしています。", // 友達と話しています
-            46: "いま、プールでおよいでいます。", // プールで泳いでいます
-            47: "いま、かいものしています。", // 買い物をしています
-            48: "ほんをよんで、ねます。", // 本を読んで、寝ます
-            49: "かいものして、いえにかえります。", // 買い物して、家に帰ります
-            50: "テレビをみて、しょくじします。", // テレビを見て、食事します
-            51: "こうえんをさんぽして、ともだちにあいます。", // 公園を散歩して、友達に会います
-            52: "にほんごをべんきょうして、おんがくをききます。", // 日本語を勉強して、音楽を聞きます
-            53: "ほんをよんでから、ねます。", // 本を読んでから、寝ます
-            54: "かいものしてから、いえにかえります。", // 買い物してから、家に帰ります
-            55: "テレビをみてから、しょくじします。", // テレビを見てから、食事します
-            56: "こうえんをさんぽしてから、ともだちにあいます。", // 公園を散歩してから、朋友に会います
-            57: "にほんごをべんきょうしてから、おんがくをききます。", // 日本語を勉強してから、音楽を聞きます
-            58: "ほんをよんでもいいですか。", // 本を読みます
-            59: "ドアをあけてもいいですか。", // ドアを開けます
-            60: "おんがくをきいてもいいですか。", // 音楽を聞きます
-            61: "にほんごではなしてもいいですか。", // 日本語で話します
-            62: "みずをのんでもいいですか。", // 水を飲みます
-            63: "ほんをよんではいけません。", // 本を読みます
-            64: "ドアをあけてはいけません。", // ドアを開けます
-            65: "おんがくをきいてはいけません。", // 音楽を聞きます
-            66: "にほんごではなしてはいけません。", // 日本語で話します
-            67: "みずをのんではいけません。" // 水を飲みます
-        };
-
-        // Show password modal
-        function showPasswordModal() {
-            try {
-                const modal = document.getElementById('password-modal');
-                if (!modal) throw new Error('Password modal not found');
-                modal.style.display = 'flex';
-                document.getElementById('password-input').focus();
-            } catch (error) {
-                console.error('Error in showPasswordModal:', error);
-                document.getElementById('message-result').textContent = 'モーダルを表示できませんでした。';
-            }
-        }
-
-        // Check password and redirect
-        function checkPassword() {
-            const passwordInput = document.getElementById('password-input').value.trim();
-            const passwordError = document.getElementById('password-error');
-            if (passwordInput === '112') {
-                window.location.href = 'history.html';
-            } else {
-                passwordError.textContent = 'パスワードが間違っています。もう一度お試しください。';
-                document.getElementById('password-input').value = '';
-            }
-        }
-
-        // Close password modal
-        function closePasswordModal() {
-            const modal = document.getElementById('password-modal');
-            if (modal) {
-                modal.style.display = 'none';
-                document.getElementById('password-input').value = '';
-                document.getElementById('password-error').textContent = '';
-            }
-        }
-
-        // Reset test
-        function resetTest() {
-            document.getElementById('name').value = '';
-            document.getElementById('class').value = '';
-            document.getElementById('date').value = '2025-06-19';
-            document.getElementById('message-info').textContent = '';
-            document.getElementById('message-result').textContent = '';
-            document.getElementById('results').style.display = 'none';
-            document.getElementById('score-display').innerHTML = '';
-            document.getElementById('start-test').style.display = 'inline-block';
-            document.getElementById('history-test').style.display = 'inline-block';
-            document.querySelector('.button-container').style.display = 'flex';
-            document.querySelectorAll('.question-section').forEach(section => section.style.display = 'none');
-            document.getElementById('submit-test').style.display = 'none';
-            document.getElementById('reset-test').style.display = 'none';
-            document.querySelectorAll('.answer-input').forEach(input => input.value = '');
-            document.querySelectorAll('.answer-feedback').forEach(feedback => {
-                feedback.textContent = '';
-                feedback.classList.remove('wrong');
-            });
-            startTime = null;
-            endTime = null;
-        }
-
-        // Start test
-        function startTest() {
-            const name = document.getElementById('name').value.trim();
-            const className = document.getElementById('class').value.trim();
-            const dateInput = document.getElementById('date').value;
-            const messageInfo = document.getElementById('message-info');
-
-            if (!name || !className || !dateInput) {
-                messageInfo.textContent = 'すべての情報を入力してください';
-                return;
-            }
-
-            startTime = formatDateTime(new Date());
-            messageInfo.textContent = '';
-            document.getElementById('start-test').style.display = 'none';
-            document.getElementById('history-test').style.display = 'none';
-            document.querySelector('.button-container').style.display = 'none';
-            document.getElementById('section-1').style.display = 'block';
-            document.getElementById('section-2').style.display = 'block';
-            document.getElementById('section-3').style.display = 'block';
-            document.getElementById('section-4').style.display = 'block';
-            document.getElementById('section-5').style.display = 'block';
-            document.getElementById('section-6').style.display = 'block';
-            document.getElementById('section-7').style.display = 'block';
-            document.getElementById('submit-test').style.display = 'block';
-            document.getElementById('reset-test').style.display = 'none';
-        }
-
-        // Attach event listeners
-        document.addEventListener('DOMContentLoaded', () => {
-            document.getElementById('start-test').addEventListener('click', startTest);
-            document.getElementById('history-test').addEventListener('click', showPasswordModal);
-            document.getElementById('confirm-password').addEventListener('click', checkPassword);
-            document.getElementById('cancel-password').addEventListener('click', closePasswordModal);
-        });
-
-        // Initialize Firebase on load
-        window.onload = function() {
-            setTimeout(() => {
-                if (!appLoaded || !firestoreLoaded) {
-                    document.getElementById('message-result').textContent = 'Firebase SDKの読み込みに失敗しました。';
-                } else {
-                    initializeFirebase();
+            // Show password modal
+            function showPasswordModal() {
+                try {
+                    const modal = document.getElementById('password-modal');
+                    if (!modal) throw new Error('Password modal not found');
+                    modal.style.display = 'flex';
+                    document.getElementById('password-input').focus();
+                } catch (error) {
+                    console.error('Error in showPasswordModal:', error);
+                    document.getElementById('message-result').textContent = 'モーダルを表示できませんでした。';
                 }
-            }, 5000);
-        };
+            }
+
+            // Check password and redirect
+            function checkPassword() {
+                const passwordInput = document.getElementById('password-input').value.trim();
+                const passwordError = document.getElementById('password-error');
+                if (passwordInput === '112') {
+                    window.location.href = 'history.html';
+                } else {
+                    passwordError.textContent = 'パスワードが間違っています。もう一度お試しください。';
+                    document.getElementById('password-input').value = '';
+                }
+            }
+
+            // Close password modal
+            function closePasswordModal() {
+                const modal = document.getElementById('password-modal');
+                if (modal) {
+                    modal.style.display = 'none';
+                    document.getElementById('password-input').value = '';
+                    document.getElementById('password-error').textContent = '';
+                }
+            }
+
+            // Reset test
+            function resetTest() {
+                document.getElementById('name').value = '';
+                document.getElementById('class').value = '';
+                document.getElementById('date').value = '2025-06-20';
+                document.getElementById('message-info').textContent = '';
+                document.getElementById('message-result').textContent = '';
+                document.getElementById('results').style.display = 'none';
+                document.getElementById('score-display').innerHTML = '';
+                document.getElementById('start-test').style.display = 'inline-block';
+                document.getElementById('history-test').style.display = 'inline-block';
+                document.querySelector('.button-container').style.display = 'flex';
+                document.querySelectorAll('.question-section').forEach(section => section.style.display = 'none');
+                document.getElementById('submit-test').style.display = 'none';
+                document.getElementById('reset-test').style.display = 'none';
+                document.querySelectorAll('.answer-input').forEach(input => input.value = '');
+                document.querySelectorAll('.answer-feedback').forEach(feedback => {
+                    feedback.textContent = '';
+                    feedback.classList.remove('wrong');
+                });
+                startTime = null;
+                endTime = null;
+            }
+
+            // Start test
+            function startTest() {
+                const name = document.getElementById('name').value.trim();
+                const className = document.getElementById('class').value.trim();
+                const dateInput = document.getElementById('date').value;
+                const messageInfo = document.getElementById('message-info');
+
+                if (!name || !className || !dateInput) {
+                    messageInfo.textContent = 'すべての情報を入力してください';
+                    return;
+                }
+
+                startTime = formatDateTime(new Date());
+                console.log("Start Time: ", startTime);
+                messageInfo.textContent = '';
+                document.getElementById('start-test').style.display = 'none';
+                document.getElementById('history-test').style.display = 'none';
+                document.querySelector('.button-container').style.display = 'none';
+                document.querySelectorAll('.question-section').forEach(section => section.style.display = 'block');
+                document.getElementById('submit-test').style.display = 'block';
+                document.getElementById('reset-test').style.display = 'none';
+            }
+
+            // Attach event listeners
+            document.addEventListener('DOMContentLoaded', () => {
+                document.getElementById('start-test').addEventListener('click', startTest);
+                document.getElementById('history-test').addEventListener('click', showPasswordModal);
+                document.getElementById('submit-test').addEventListener('click', checkAnswers);
+                document.getElementById('confirm-password').addEventListener('click', checkPassword);
+                document.getElementById('cancel-password').addEventListener('click', closePasswordModal);
+                document.getElementById('reset-test').addEventListener('click', resetTest);
+            });
+
+            // Initialize Firebase on load
+            window.onload = function() {
+                setTimeout(() => {
+                    if (!appLoaded || !firestoreLoaded) {
+                        document.getElementById('message-result').textContent = 'Firebase SDKの読み込みに失敗しました。';
+                    } else {
+                        initializeFirebase();
+                    }
+                }, 5000);
+            };
+        }
     </script>
 
     <!-- Firebase SDK -->
