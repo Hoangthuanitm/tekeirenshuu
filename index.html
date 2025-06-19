@@ -210,6 +210,10 @@
             color: #EF4444;
             font-weight: 500;
         }
+        /* Ẩn nút Làm lại ban đầu */
+        #reset-test {
+            display: none !important;
+        }
     </style>
 </head>
 <body>
@@ -430,9 +434,11 @@
 
     <div class="question-section" id="section-2" style="display: none;">
         <h2>問題２．て形と「〜てください」を組み合わせてください。</h2>
+        <h2>Hãy kết hợp thể Te với mẫu てください　</h2>
         <div class="example">
             <p>れい）<ruby>電気<rt>でんき</rt></ruby>を<ruby>付<rt>つ</rt></ruby>けます。</p>
-            <p>→ <ruby>電気<rt>でんき</rt></ruby>を<span class="highlight"><ruby>付<rt>つ</rt></ruby>けてください</span>。</p>
+            <p>→ <ruby>電気<rt>でんき</rt></ruby>を<span class="highlight"><ruby>付<rt>つ</rt></ruby>けてください</span>。
+            Hãy bật điện</p>
         </div>
         <div class="question">
             <p>１．<ruby>本<rt>ほん</rt></ruby>を<ruby>読<rt>よ</rt></ruby>みます。</p>
@@ -463,9 +469,11 @@
 
     <div class="question-section" id="section-3" style="display: none;">
         <h2>問題３．て形と「〜ています」を組み合わせてください。</h2>
+                <h2>Hãy kết hợp thể Te với mẫu ています　</h2>
         <div class="example">
-            <p>れい）<ruby>今<rt>いま</rt></ruby>、<ruby>日本語<rt>にほんご</rt></ruby>を<ruby>勉強<rt>べんきょう</rt></ruby>します。</p>
-            <p>→ <ruby>今<rt>いま</rt></ruby>、<ruby>日本語<rt>にほんご</rt></ruby>を<span class="highlight"><ruby>勉強<rt>べんきょう</rt></ruby>しています</span>。</p>
+            <p>れい）<ruby>今<rt>いま</rt></ruby>、<ruby>日本語<rt>にほんgo</rt></ruby>を<ruby>勉強<rt>べんきょう</rt></ruby>します。</p>
+            <p>→ <ruby>今<rt>いま</rt></ruby>、<ruby>日本語<rt>にほんご</rt></ruby>を<span class="highlight"><ruby>勉強<rt>べんきょう</rt></ruby>しています</span>。
+            Bây giờ, tôi đang học tiếng nhật</p>
         </div>
         <div class="question">
             <p>１．<ruby>今<rt>いま</rt></ruby>、<ruby>本<rt>ほん</rt></ruby>を<ruby>読<rt>よ</rt></ruby>みます。</p>
@@ -496,9 +504,11 @@
 
     <div class="question-section" id="section-4" style="display: none;">
         <h2>問題４．て形を使って「V1て、V2」を作ってください。</h2>
+                <h2>Hãy kết hợp thể Te với mẫu 「V1て、V2」</h2>
         <div class="example">
             <p>れい）<ruby>日本語<rt>にほんご</rt></ruby>を<ruby>勉強<rt>べんきょう</rt></ruby>します。<ruby>ごはん<rt>ごはん</rt></ruby>を<ruby>食<rt>た</rt></ruby>べます。</p>
-            <p>→ <ruby>日本語<rt>にほんご</rt></ruby>を<span class="highlight"><ruby>勉強<rt>べんきょう</rt></ruby>して、</span><ruby>ごはん<rt>ごはん</rt></ruby>を<ruby>食<rt>た</rt></ruby>べます。</p>
+            <p>→ <ruby>日本語<rt>にほんご</rt></ruby>を<span class="highlight"><ruby>勉強<rt>べんきょう</rt></ruby>して、</span><ruby>ごはん<rt>ごはん</rt></ruby>を<ruby>食<rt>た</rt></ruby>べます。
+            Tôi học tiếng nhật rồi ăn cơm</p>
         </div>
         <div class="question">
             <p>１．<ruby>本<rt>ほん</rt></ruby>を<ruby>読<rt>よ</rt></ruby>みます。<ruby>寝<rt>ね</rt></ruby>ます。</p>
@@ -529,9 +539,10 @@
 
     <div class="question-section" id="section-5" style="display: none;">
         <h2>問題５．て形を使って「V1てから、V2」を作ってください。</h2>
+                        <h2>Hãy kết hợp thể Te với mẫu 「V1てから、V2」　</h2>
         <div class="example">
             <p>れい）<ruby>日本語<rt>にほんご</rt></ruby>を<ruby>勉強<rt>べんきょう</rt></ruby>します。<ruby>ごはん<rt>ごはん</rt></ruby>を<ruby>食<rt>た</rt></ruby>べます。</p>
-            <p>→ <ruby>日本語<rt>にほんご</rt></ruby>を<span class="highlight"><ruby>勉強<rt>べんきょう</rt></ruby>してから、</span><ruby>ごはん<rt>ごはん</rt></ruby>を<ruby>食<rt>た</rt></ruby>べます。</p>
+            <p>→ <ruby>日本語<rt>にほんご</rt></ruby>を<span class="highlight"><ruby>勉強<rt>べんきょう</rt></ruby>してから、</span><ruby>ごはん<rt>ごはん</rt></ruby>を<ruby>食<rt>た</rt></ruby>べます。Sau khi học tiếng nhật thì tôi ăn cơm</p>
         </div>
         <div class="question">
             <p>１．<ruby>本<rt>ほん</rt></ruby>を<ruby>読<rt>よ</rt></ruby>みます。<ruby>寝<rt>ね</rt></ruby>ます。</p>
@@ -680,6 +691,8 @@
                 document.getElementById("results").style.display = "block";
                 document.getElementById("submit-test").style.display = "none";
                 document.getElementById("reset-test").style.display = "none";
+                // Hiển thị nút Làm lại sau khi nộp bài
+                document.getElementById('reset-test-result').style.display = 'inline-block';
 
                 // Re-attach event listeners for result buttons
                 document.getElementById('history-test-result').addEventListener('click', showPasswordModal);
@@ -833,7 +846,8 @@
             document.getElementById('section-4').style.display = 'block';
             document.getElementById('section-5').style.display = 'block';
             document.getElementById('submit-test').style.display = 'block';
-            document.getElementById('reset-test').style.display = 'block';
+            // Không hiển thị nút reset-test trong quá trình làm bài
+            document.getElementById('reset-test').style.display = 'none';
         }
 
         // Attach event listeners
