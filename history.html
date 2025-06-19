@@ -1,176 +1,352 @@
-<script type="module">
-    // Import Firebase SDK
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-app.js";
-    import { getAnalytics, logEvent } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-analytics.js";
-    import { getFirestore, collection, getDocs, deleteDoc, doc, enableIndexedDbPersistence } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-firestore.js";
-
-    // Firebase configuration
-    const firebaseConfig = {
-        apiKey: "AIzaSyAfy4QMD9_7PyFHpInNdKDRWuW4AYCtLJ4",
-        authDomain: "history-e4633.firebaseapp.com",
-        projectId: "history-e4633",
-        storageBucket: "history-e4633.firebasestorage.app",
-        messagingSenderId: "331974436893",
-        appId: "1:331974436893:web:10c3c6adf7b66d2b5fbef4",
-        measurementId: "G-DC055090BW"
-    };
-
-    // Initialize Firebase
-    let app, analytics, db;
-    try {
-        app = initializeApp(firebaseConfig);
-        analytics = getAnalytics(app);
-        db = getFirestore(app);
-        enableIndexedDbPersistence(db).catch(err => {
-            console.warn('Không thể kích hoạt chế độ offline:', err);
-        });
-    } catch (error) {
-        console.error('Lỗi khởi tạo Firebase:', error);
-        document.getElementById('message').textContent = 'Không thể kết nối với cơ sở dữ liệu. Vui lòng kiểm tra cấu hình hoặc kết nối mạng.';
-    }
-
-    // Define Firestore functions
-    function normalizeString(str) {
-        return str
-            .normalize('NFKC')
-            .trim()
-            .replace(/[\s\u3000]+/g, '')
-            .replace(/[。！？｡!?.、，]/g, '')
-            .toLowerCase();
-    }
-
-    function getEvaluation(percentage) {
-        if (percentage >= 80) return 'A';
-        if (percentage >= 60) return 'B';
-        if (percentage >= 40) return 'C';
-        if (percentage >= 20) return 'D';
-        return 'F';
-    }
-
-    async function renderHistoryTable(searchTerm = '') {
-        const historyTableBody = document.getElementById('history-table-body');
-        const messageDiv = document.getElementById('message');
-        let testHistory = [];
-        const collectionName = 'testHistorytekeirenshuu';
-
-        if (!db) {
-            messageDiv.textContent = 'Không thể kết nối với cơ sở dữ liệu. Vui lòng kiểm tra cấu hình Firebase.';
-            return;
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lịch sử kiểm tra て形練習</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans JP', 'Roboto', sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #F5F7FA;
+            font-size: 16px;
+            line-height: 1.6;
+            color: #333;
         }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 15px;
+            background-color: #FFFFFF;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        }
+        .header h1 {
+            font-size: 1.8em;
+            margin: 0;
+            color: #4A90E2;
+        }
+        .search-container {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .search-container input {
+            width: 100%;
+            max-width: 400px;
+            padding: 10px;
+            border: 1px solid #D1D5DB;
+            border-radius: 6px;
+            font-family: 'Roboto', sans-serif;
+            font-size: 16px;
+        }
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #FFFFFF;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        }
+        .history-table th, .history-table td {
+            border: 1px solid #E0E4EA;
+            padding: 10px;
+            text-align: center;
+            font-size: 0.95em;
+        }
+        .history-table th {
+            background-color: #4A90E2;
+            color: #FFFFFF;
+        }
+        .history-table tbody tr:nth-child(even) {
+            background-color: #F9FAFB;
+        }
+        .rank-a {
+            color: #2ECC71;
+            font-weight: bold;
+        }
+        .rank-f {
+            color: #EF4444;
+            font-weight: bold;
+        }
+        .delete-btn {
+            background-color: #EF4444;
+            color: #FFFFFF;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: background-color 0.2s;
+        }
+        .delete-btn:hover {
+            background-color: #DC2626;
+        }
+        .error-message {
+            color: #EF4444;
+            margin-top: 15px;
+            font-size: 0.95em;
+            text-align: center;
+        }
+        button {
+            background-color: #4A90E2;
+            color: #FFFFFF;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 20px;
+            font-size: 1em;
+            font-family: 'Roboto', sans-serif;
+            transition: background-color 0.2s, transform 0.1s;
+        }
+        button:hover {
+            background-color: #357ABD;
+            transform: translateY(-1px);
+        }
+        .button-container {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Lịch sử kiểm tra</h1>
+        <h2>て形練習</h2>
+    </div>
 
+    <div class="search-container">
+        <input type="text" id="search" placeholder="Tìm kiếm theo tên, lớp hoặc ngày...">
+    </div>
+
+    <div id="history-table-container">
+        <table class="history-table">
+            <thead>
+                <tr>
+                    <th>Bắt đầu</th>
+                    <th>Kết thúc</th>
+                    <th>Ngày</th>
+                    <th>Tên</th>
+                    <th>Lớp</th>
+                    <th>Điểm số</th>
+                    <th>Tỷ lệ</th>
+                    <th>Xếp loại</th>
+                    <th>Hành động</th>
+                </tr>
+            </thead>
+            <tbody id="history-table-body"></tbody>
+        </table>
+    </div>
+
+    <div id="message" class="error-message"></div>
+
+    <div class="button-container">
+        <button id="back-to-test">Quay lại bài kiểm tra</button>
+    </div>
+
+    <script type="module">
+        // Import Firebase SDK
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-app.js";
+        import { getAnalytics, logEvent } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-analytics.js";
+        import { getFirestore, collection, getDocs, deleteDoc, doc, enableIndexedDbPersistence } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-firestore.js";
+
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAfy4QMD9_7PyFHpInNdKDRWuW4AYCtLJ4",
+            authDomain: "history-e4633.firebaseapp.com",
+            projectId: "history-e4633",
+            storageBucket: "history-e4633.firebasestorage.app",
+            messagingSenderId: "331974436893",
+            appId: "1:331974436893:web:10c3c6adf7b66d2b5fbef4",
+            measurementId: "G-DC055090BW"
+        };
+
+        // Initialize Firebase
+        let app, analytics, db;
         try {
-            const snapshot = await getDocs(collection(db, collectionName));
-            testHistory = snapshot.docs.map(doc => ({
-                id: doc.id,
-                collection: collectionName,
-                ...doc.data()
-            }));
-
-            // Filter valid data
-            testHistory = testHistory.filter(entry => {
-                if (!entry.timestamp || typeof entry.timestamp.toDate !== 'function') {
-                    console.warn(`Dữ liệu không hợp lệ trong collection ${entry.collection}, id ${entry.id}: Thiếu hoặc sai định dạng timestamp`);
-                    return false;
-                }
-                return true;
+            app = initializeApp(firebaseConfig);
+            analytics = getAnalytics(app);
+            db = getFirestore(app);
+            enableIndexedDbPersistence(db).catch(err => {
+                console.warn('Không thể kích hoạt chế độ offline:', err);
             });
-
-            // Sort by timestamp (newest first)
-            testHistory.sort((a, b) => b.timestamp.toDate() - a.timestamp.toDate());
-
-            // Filter by search term
-            if (searchTerm) {
-                const normalizedSearch = normalizeString(searchTerm);
-                testHistory = testHistory.filter(entry =>
-                    normalizeString(entry.name || '').includes(normalizedSearch) ||
-                    normalizeString(entry.class || '').includes(normalizedSearch) ||
-                    normalizeString(entry.date || '').includes(normalizedSearch)
-                );
-            }
-
-            // Clear table content before rendering
-            historyTableBody.innerHTML = '';
-            testHistory.forEach(entry => {
-                const evaluation = getEvaluation(entry.percentage || 0);
-                const rankClass = evaluation === 'A' ? 'rank-a' : evaluation === 'F' ? 'rank-f' : '';
-                const timestamp = entry.timestamp.toDate().toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh' });
-                const row = `
-                    <tr>
-                        <td>${timestamp}</td>
-                        <td>${entry.date || 'N/A'}</td>
-                        <td>${entry.name || 'N/A'}</td>
-                        <td>${entry.class || 'N/A'}</td>
-                        <td>${entry.score || 0}/57</td> <!-- Đã sửa từ /37 thành /57 -->
-                        <td>${Math.round(entry.percentage || 0)}%</td>
-                        <td class="${rankClass}">${evaluation}</td>
-                        <td><button class="delete-btn" data-doc-id="${entry.id}" data-collection="${entry.collection}">Xóa</button></td>
-                    </tr>
-                `;
-                historyTableBody.innerHTML += row;
-            });
-
-            if (testHistory.length === 0) {
-                historyTableBody.innerHTML = '<tr><td colspan="8">Không có dữ liệu lịch sử hoặc không thể truy xuất dữ liệu.</td></tr>';
-            }
-
-            messageDiv.textContent = '';
         } catch (error) {
-            console.error('Lỗi khi truy xuất Firestore:', error);
-            let errorMessage = 'Đã xảy ra lỗi khi tải lịch sử kiểm tra. Vui lòng thử lại.';
-            if (error.code === 'permission-denied') {
-                errorMessage = 'Không có quyền truy cập dữ liệu. Vui lòng kiểm tra quy tắc Firestore.';
-            } else if (error.code === 'unavailable') {
-                errorMessage = 'Không thể kết nối với Firestore. Vui lòng kiểm tra kết nối mạng.';
-            } else if (error.code === 'invalid-argument') {
-                errorMessage = 'Lỗi cấu hình truy vấn Firestore. Vui lòng kiểm tra mã.';
-            } else {
-                errorMessage += ` (Chi tiết: ${error.message})`;
-            }
-            messageDiv.textContent = errorMessage;
-        }
-    }
-
-    async function deleteHistoryEntry(docId, collectionName) {
-        if (!db) {
-            document.getElementById('message').textContent = 'Không thể kết nối với cơ sở dữ liệu. Vui lòng kiểm tra cấu hình Firebase.';
-            return;
+            console.error('Lỗi khởi tạo Firebase:', error);
+            document.getElementById('message').textContent = 'Không thể kết nối với cơ sở dữ liệu. Vui lòng kiểm tra cấu hình hoặc kết nối mạng.';
         }
 
-        if (confirm('Bạn có chắc chắn muốn xóa kết quả này không?')) {
+        // Define Firestore functions
+        function normalizeString(str) {
+            return str
+                .normalize('NFKC')
+                .trim()
+                .replace(/[\s\u3000]+/g, '')
+                .replace(/[。！？｡!?.、，]/g, '')
+                .toLowerCase();
+        }
+
+        function getEvaluation(percentage) {
+            if (percentage >= 80) return 'A';
+            if (percentage >= 60) return 'B';
+            if (percentage >= 40) return 'C';
+            if (percentage >= 20) return 'D';
+            return 'F';
+        }
+
+        // Format date and time to HH:mm DD/MM/YYYY
+        function formatDateTime(dateString) {
+            if (!dateString) return 'N/A';
             try {
-                await deleteDoc(doc(db, collectionName, docId));
-                logEvent(analytics, 'delete_test_record', { doc_id: docId, collection: collectionName });
-                renderHistoryTable(document.getElementById('search')?.value.trim() || '');
+                const date = new Date(dateString);
+                return date.toLocaleString('vi-VN', {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: 'numeric',
+                    timeZone: 'Asia/Ho_Chi_Minh'
+                }).replace(',', '');
+            } catch {
+                return 'N/A';
+            }
+        }
+
+        async function renderHistoryTable(searchTerm = '') {
+            const historyTableBody = document.getElementById('history-table-body');
+            const messageDiv = document.getElementById('message');
+            let testHistory = [];
+            const collectionName = 'testHistorytekeirenshuu';
+
+            if (!db) {
+                messageDiv.textContent = 'Không thể kết nối với cơ sở dữ liệu. Vui lòng kiểm tra cấu hình Firebase.';
+                return;
+            }
+
+            try {
+                const snapshot = await getDocs(collection(db, collectionName));
+                testHistory = snapshot.docs.map(doc => ({
+                    id: doc.id,
+                    collection: collectionName,
+                    ...doc.data()
+                }));
+
+                // Filter valid data
+                testHistory = testHistory.filter(entry => {
+                    if (!entry.timestamp || typeof entry.timestamp.toDate !== 'function') {
+                        console.warn(`Dữ liệu không hợp lệ trong collection ${entry.collection}, id ${entry.id}: Thiếu hoặc sai định dạng timestamp`);
+                        return false;
+                    }
+                    return true;
+                });
+
+                // Sort by timestamp (newest first)
+                testHistory.sort((a, b) => b.timestamp.toDate() - a.timestamp.toDate());
+
+                // Filter by search term
+                if (searchTerm) {
+                    const normalizedSearch = normalizeString(searchTerm);
+                    testHistory = testHistory.filter(entry =>
+                        normalizeString(entry.name || '').includes(normalizedSearch) ||
+                        normalizeString(entry.class || '').includes(normalizedSearch) ||
+                        normalizeString(entry.date || '').includes(normalizedSearch)
+                    );
+                }
+
+                // Clear table content before rendering
+                historyTableBody.innerHTML = '';
+                testHistory.forEach(entry => {
+                    const evaluation = getEvaluation(entry.percentage || 0);
+                    const rankClass = evaluation === 'A' ? 'rank-a' : evaluation === 'F' ? 'rank-f' : '';
+                    const startTime = formatDateTime(entry.startTime);
+                    const endTime = formatDateTime(entry.endTime);
+                    const row = `
+                        <tr>
+                            <td>${startTime}</td>
+                            <td>${endTime}</td>
+                            <td>${entry.date || 'N/A'}</td>
+                            <td>${entry.name || 'N/A'}</td>
+                            <td>${entry.class || 'N/A'}</td>
+                            <td>${entry.totalScore || 0}/57</td>
+                            <td>${Math.round(entry.percentage || 0)}%</td>
+                            <td class="${rankClass}">${evaluation}</td>
+                            <td><button class="delete-btn" data-doc-id="${entry.id}" data-collection="${entry.collection}">Xóa</button></td>
+                        </tr>
+                    `;
+                    historyTableBody.innerHTML += row;
+                });
+
+                if (testHistory.length === 0) {
+                    historyTableBody.innerHTML = '<tr><td colspan="9">Không có dữ liệu lịch sử hoặc không thể truy xuất dữ liệu.</td></tr>';
+                }
+
+                messageDiv.textContent = '';
             } catch (error) {
-                console.error('Lỗi khi xóa bản ghi:', error);
-                let errorMessage = 'Đã xảy ra lỗi khi xóa kết quả.';
+                console.error('Lỗi khi truy xuất Firestore:', error);
+                let errorMessage = 'Đã xảy ra lỗi khi tải lịch sử kiểm tra. Vui lòng thử lại.';
                 if (error.code === 'permission-denied') {
-                    errorMessage = 'Không có quyền xóa dữ liệu. Vui lòng kiểm tra quy tắc Firestore.';
+                    errorMessage = 'Không có quyền truy cập dữ liệu. Vui lòng kiểm tra quy tắc Firestore.';
                 } else if (error.code === 'unavailable') {
                     errorMessage = 'Không thể kết nối với Firestore. Vui lòng kiểm tra kết nối mạng.';
+                } else if (error.code === 'invalid-argument') {
+                    errorMessage = 'Lỗi cấu hình truy vấn Firestore. Vui lòng kiểm tra mã.';
+                } else {
+                    errorMessage += ` (Chi tiết: ${error.message})`;
                 }
-                document.getElementById('message').textContent = errorMessage;
+                messageDiv.textContent = errorMessage;
             }
         }
-    }
 
-    document.addEventListener('DOMContentLoaded', () => {
-        const searchInput = document.getElementById('search');
-        renderHistoryTable();
-        if (searchInput) {
-            searchInput.addEventListener('input', () => {
-                renderHistoryTable(searchInput.value.trim());
+        async function deleteHistoryEntry(docId, collectionName) {
+            if (!db) {
+                document.getElementById('message').textContent = 'Không thể kết nối với cơ sở dữ liệu. Vui lòng kiểm tra cấu hình Firebase.';
+                return;
+            }
+
+            if (confirm('Bạn có chắc chắn muốn xóa kết quả này không?')) {
+                try {
+                    await deleteDoc(doc(db, collectionName, docId));
+                    logEvent(analytics, 'delete_test_record', { doc_id: docId, collection: collectionName });
+                    renderHistoryTable(document.getElementById('search')?.value.trim() || '');
+                } catch (error) {
+                    console.error('Lỗi khi xóa bản ghi:', error);
+                    let errorMessage = 'Đã xảy ra lỗi khi xóa kết quả.';
+                    if (error.code === 'permission-denied') {
+                        errorMessage = 'Không có quyền xóa dữ liệu. Vui lòng kiểm tra quy tắc Firestore.';
+                    } else if (error.code === 'unavailable') {
+                        errorMessage = 'Không thể kết nối với Firestore. Vui lòng kiểm tra kết nối mạng.';
+                    }
+                    document.getElementById('message').textContent = errorMessage;
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchInput = document.getElementById('search');
+            renderHistoryTable();
+            if (searchInput) {
+                searchInput.addEventListener('input', () => {
+                    renderHistoryTable(searchInput.value.trim());
+                });
+            }
+
+            // Event delegation for delete buttons
+            const historyTableBody = document.getElementById('history-table-body');
+            historyTableBody.addEventListener('click', (e) => {
+                if (e.target.classList.contains('delete-btn')) {
+                    const docId = e.target.dataset.docId;
+                    const collectionName = e.target.dataset.collection;
+                    deleteHistoryEntry(docId, collectionName);
+                }
             });
-        }
 
-        // Event delegation for delete buttons
-        const historyTableBody = document.getElementById('history-table-body');
-        historyTableBody.addEventListener('click', (e) => {
-            if (e.target.classList.contains('delete-btn')) {
-                const docId = e.target.dataset.docId;
-                const collectionName = e.target.dataset.collection;
-                deleteHistoryEntry(docId, collectionName);
-            }
+            // Back to test button
+            document.getElementById('back-to-test').addEventListener('click', () => {
+                window.location.href = 'index.html';
+            });
         });
-    });
-</script>
+    </script>
+</body>
+</html>
