@@ -235,7 +235,7 @@
 
     <div class="button-container">
         <button id="start-test" type="button">Bắt đầu làm bài</button>
-        <button id="history-test" type="button" onclick="window.showPasswordModal()">Lịch sử kiểm tra</button>
+        <button id="history-test" type="button">Lịch sử kiểm tra</button>
     </div>
     <div id="message-info" class="error-message"></div>
 
@@ -426,138 +426,139 @@
             <input type="text" class="answer-input" id="q37" placeholder="て形を入力">
             <div class="answer-feedback" id="feedback-37"></div>
         </div>
-    <div class="question-section" id="section-2">
-    <h2>問題２．て形と「〜てください」を組み合わせてください。</h2>
-    <div class="example">
-        <p>れい）<ruby>電気<rt>でんき</rt></ruby>を<ruby>付<rt>つ</rt></ruby>けます。</p>
-        <p>→ <ruby>電気<rt>でんき</rt></ruby>を<span class="highlight"><ruby>付<rt>つ</rt></ruby>けてください</span>。</p>
     </div>
-    <div class="question">
-        <p>１．<ruby>本<rt>ほん</rt></ruby>を<ruby>読<rt>よ</rt></ruby>みます。</p>
-        <input type="text" class="answer-input" id="q38" placeholder="「〜てください」を入力">
-        <div class="answer-feedback" id="feedback-38"></div>
-    </div>
-    <div class="question">
-        <p>２．ドアを<ruby>開<rt>あ</rt></ruby>けます。</p>
-        <input type="text" class="answer-input" id="q39" placeholder="「〜てください」を入力">
-        <div class="answer-feedback" id="feedback-39"></div>
-    </div>
-    <div class="question">
-        <p>３．<ruby>音楽<rt>おんがく</rt></ruby>を<ruby>聞<rt>き</rt></ruby>きます。</p>
-        <input type="text" class="answer-input" id="q40" placeholder="「〜てください」を入力">
-        <div class="answer-feedback" id="feedback-40"></div>
-    </div>
-    <div class="question">
-        <p>４．<ruby>日本語<rt>にほんご</rt></ruby>で<ruby>話<rt>はな</rt></ruby>します。</p>
-        <input type="text" class="answer-input" id="q41" placeholder="「〜てください」を入力">
-        <div class="answer-feedback" id="feedback-41"></div>
-    </div>
-    <div class="question">
-        <p>５．<ruby>水<rt>みず</rt></ruby>を<ruby>飲<rt>の</rt></ruby>みます。</p>
-        <input type="text" class="answer-input" id="q42" placeholder="「〜てください」を入力">
-        <div class="answer-feedback" id="feedback-42"></div>
-    </div>
-</div>
 
-    <div class="question-section" id="section-3">
-    <h2>問題３．て形と「〜ています」を組み合わせてください。</h2>
-    <div class="example">
-        <p>れい）<ruby>今<rt>いま</rt></ruby>、<ruby>日本語<rt>にほんご</rt></ruby>を<ruby>勉強<rt>べんきょう</rt></ruby>します。</p>
-        <p>→ <ruby>今<rt>いま</rt></ruby>、<ruby>日本語<rt>にほんご</rt></ruby>を<span class="highlight"><ruby>勉強<rt>べんきょう</rt></ruby>しています</span>。</p>
+    <div class="question-section" id="section-2" style="display: none;">
+        <h2>問題２．て形と「〜てください」を組み合わせてください。</h2>
+        <div class="example">
+            <p>れい）<ruby>電気<rt>でんき</rt></ruby>を<ruby>付<rt>つ</rt></ruby>けます。</p>
+            <p>→ <ruby>電気<rt>でんき</rt></ruby>を<span class="highlight"><ruby>付<rt>つ</rt></ruby>けてください</span>。</p>
+        </div>
+        <div class="question">
+            <p>１．<ruby>本<rt>ほん</rt></ruby>を<ruby>読<rt>よ</rt></ruby>みます。</p>
+            <input type="text" class="answer-input" id="q38" placeholder="「〜てください」を入力">
+            <div class="answer-feedback" id="feedback-38"></div>
+        </div>
+        <div class="question">
+            <p>２．ドアを<ruby>開<rt>あ</rt></ruby>けます。</p>
+            <input type="text" class="answer-input" id="q39" placeholder="「〜てください」を入力">
+            <div class="answer-feedback" id="feedback-39"></div>
+        </div>
+        <div class="question">
+            <p>３．<ruby>音楽<rt>おんがく</rt></ruby>を<ruby>聞<rt>き</rt></ruby>きます。</p>
+            <input type="text" class="answer-input" id="q40" placeholder="「〜てください」を入力">
+            <div class="answer-feedback" id="feedback-40"></div>
+        </div>
+        <div class="question">
+            <p>４．<ruby>日本語<rt>にほんご</rt></ruby>で<ruby>話<rt>はな</rt></ruby>します。</p>
+            <input type="text" class="answer-input" id="q41" placeholder="「〜てください」を入力">
+            <div class="answer-feedback" id="feedback-41"></div>
+        </div>
+        <div class="question">
+            <p>５．<ruby>水<rt>みず</rt></ruby>を<ruby>飲<rt>の</rt></ruby>みます。</p>
+            <input type="text" class="answer-input" id="q42" placeholder="「〜てください」を入力">
+            <div class="answer-feedback" id="feedback-42"></div>
+        </div>
     </div>
-    <div class="question">
-        <p>１．<ruby>今<rt>いま</rt></ruby>、<ruby>本<rt>ほん</rt></ruby>を<ruby>読<rt>よ</rt></ruby>みます。</p>
-        <input type="text" class="answer-input" id="q43" placeholder="「〜ています」を入力">
-        <div class="answer-feedback" id="feedback-43"></div>
-    </div>
-    <div class="question">
-        <p>２．<ruby>今<rt>いま</rt></ruby>、テレビを<ruby>見<rt>み</rt></ruby>ます。</p>
-        <input type="text" class="answer-input" id="q44" placeholder="「〜ています」を入力">
-        <div class="answer-feedback" id="feedback-44"></div>
-    </div>
-    <div class="question">
-        <p>３．<ruby>今<rt>いま</rt></ruby>、<ruby>友達<rt>ともだち</rt></ruby>と<ruby>話<rt>はな</rt></ruby>します。</p>
-        <input type="text" class="answer-input" id="q45" placeholder="「〜ています」を入力">
-        <div class="answer-feedback" id="feedback-45"></div>
-    </div>
-    <div class="question">
-        <p>４．<ruby>今<rt>いま</rt></ruby>、プールで<ruby>泳<rt>およ</rt></ruby>ぎます。</p>
-        <input type="text" class="answer-input" id="q46" placeholder="「〜ています」を入力">
-        <div class="answer-feedback" id="feedback-46"></div>
-    </div>
-    <div class="question">
-        <p>５．<ruby>今<rt>いま</rt></ruby>、<ruby>買い物<rt>かいもの</rt></ruby>します。</p>
-        <input type="text" class="answer-input" id="q47" placeholder="「〜をしています」を入力">
-        <div class="answer-feedback" id="feedback-47"></div>
-    </div>
-</div>
 
-<div class="question-section" id="section-4">
-    <h2>問題４．て形を使って「V1て、V2」を作ってください。</h2>
-    <div class="example">
-        <p>れい）<ruby>日本語<rt>にほんご</rt></ruby>を<ruby>勉強<rt>べんきょう</rt></ruby>します。<ruby>ごはん<rt>ごはん</rt></ruby>を<ruby>食<rt>た</rt></ruby>べます。</p>
-        <p>→ <ruby>日本語<rt>にほんご</rt></ruby>を<span class="highlight"><ruby>勉強<rt>べんきょう</rt></ruby>して、</span><ruby>ごはん<rt>ごはん</rt></ruby>を<ruby>食<rt>た</rt></ruby>べます。</p>
+    <div class="question-section" id="section-3" style="display: none;">
+        <h2>問題３．て形と「〜ています」を組み合わせてください。</h2>
+        <div class="example">
+            <p>れい）<ruby>今<rt>いま</rt></ruby>、<ruby>日本語<rt>にほんご</rt></ruby>を<ruby>勉強<rt>べんきょう</rt></ruby>します。</p>
+            <p>→ <ruby>今<rt>いま</rt></ruby>、<ruby>日本語<rt>にほんご</rt></ruby>を<span class="highlight"><ruby>勉強<rt>べんきょう</rt></ruby>しています</span>。</p>
+        </div>
+        <div class="question">
+            <p>１．<ruby>今<rt>いま</rt></ruby>、<ruby>本<rt>ほん</rt></ruby>を<ruby>読<rt>よ</rt></ruby>みます。</p>
+            <input type="text" class="answer-input" id="q43" placeholder="「〜ています」を入力">
+            <div class="answer-feedback" id="feedback-43"></div>
+        </div>
+        <div class="question">
+            <p>２．<ruby>今<rt>いま</rt></ruby>、テレビを<ruby>見<rt>み</rt></ruby>ます。</p>
+            <input type="text" class="answer-input" id="q44" placeholder="「〜ています」を入力">
+            <div class="answer-feedback" id="feedback-44"></div>
+        </div>
+        <div class="question">
+            <p>３．<ruby>今<rt>いま</rt></ruby>、<ruby>友達<rt>ともだち</rt></ruby>と<ruby>話<rt>はな</rt></ruby>します。</p>
+            <input type="text" class="answer-input" id="q45" placeholder="「〜ています」を入力">
+            <div class="answer-feedback" id="feedback-45"></div>
+        </div>
+        <div class="question">
+            <p>４．<ruby>今<rt>いま</rt></ruby>、プールで<ruby>泳<rt>およ</rt></ruby>ぎます。</p>
+            <input type="text" class="answer-input" id="q46" placeholder="「〜ています」を入力">
+            <div class="answer-feedback" id="feedback-46"></div>
+        </div>
+        <div class="question">
+            <p>５．<ruby>今<rt>いま</rt></ruby>、<ruby>買い物<rt>かいもの</rt></ruby>します。</p>
+            <input type="text" class="answer-input" id="q47" placeholder="「〜をしています」を入力">
+            <div class="answer-feedback" id="feedback-47"></div>
+        </div>
     </div>
-    <div class="question">
-        <p>１．<ruby>本<rt>ほん</rt></ruby>を<ruby>読<rt>よ</rt></ruby>みます。<ruby>寝<rt>ね</rt></ruby>ます。</p>
-        <input type="text" class="answer-input" id="q48" placeholder="「〜て、」を入力">
-        <div class="answer-feedback" id="feedback-48"></div>
+
+    <div class="question-section" id="section-4" style="display: none;">
+        <h2>問題４．て形を使って「V1て、V2」を作ってください。</h2>
+        <div class="example">
+            <p>れい）<ruby>日本語<rt>にほんご</rt></ruby>を<ruby>勉強<rt>べんきょう</rt></ruby>します。<ruby>ごはん<rt>ごはん</rt></ruby>を<ruby>食<rt>た</rt></ruby>べます。</p>
+            <p>→ <ruby>日本語<rt>にほんご</rt></ruby>を<span class="highlight"><ruby>勉強<rt>べんきょう</rt></ruby>して、</span><ruby>ごはん<rt>ごはん</rt></ruby>を<ruby>食<rt>た</rt></ruby>べます。</p>
+        </div>
+        <div class="question">
+            <p>１．<ruby>本<rt>ほん</rt></ruby>を<ruby>読<rt>よ</rt></ruby>みます。<ruby>寝<rt>ね</rt></ruby>ます。</p>
+            <input type="text" class="answer-input" id="q48" placeholder="「〜て、」を入力">
+            <div class="answer-feedback" id="feedback-48"></div>
+        </div>
+        <div class="question">
+            <p>２．<ruby>買い物<rt>かいもの</rt></ruby>します。<ruby>家<rt>いえ</rt></ruby>に<ruby>帰<rt>かえ</rt></ruby>ります。</p>
+            <input type="text" class="answer-input" id="q49" placeholder="「〜て、」を入力">
+            <div class="answer-feedback" id="feedback-49"></div>
+        </div>
+        <div class="question">
+            <p>３．テレビを<ruby>見<rt>み</rt></ruby>ます。<ruby>食事<rt>しょくじ</rt></ruby>をします。</p>
+            <input type="text" class="answer-input" id="q50" placeholder="「〜て、」を入力">
+            <div class="answer-feedback" id="feedback-50"></div>
+        </div>
+        <div class="question">
+            <p>４．<ruby>公園<rt>こうえん</rt></ruby>を<ruby>散歩<rt>さんぽ</rt></ruby>します。<ruby>友達<rt>ともだち</rt></ruby>に<ruby>会<rt>あ</rt></ruby>います。</p>
+            <input type="text" class="answer-input" id="q51" placeholder="「〜て、」を入力">
+            <div class="answer-feedback" id="feedback-51"></div>
+        </div>
+        <div class="question">
+            <p>５．<ruby>日本語<rt>にほんご</rt></ruby>を<ruby>勉強<rt>べんきょう</rt></ruby>します。<ruby>音楽<rt>おんがく</rt></ruby>を<ruby>聞<rt>き</rt></ruby>きます。</p>
+            <input type="text" class="answer-input" id="q52" placeholder="「〜て、」を入力">
+            <div class="answer-feedback" id="feedback-52"></div>
+        </div>
     </div>
-    <div class="question">
-        <p>２．<ruby>買い物<rt>かいもの</rt></ruby>します。<ruby>家<rt>いえ</rt></ruby>に<ruby>帰<rt>かえ</rt></ruby>ります。</p>
-        <input type="text" class="answer-input" id="q49" placeholder="「〜て、」を入力">
-        <div class="answer-feedback" id="feedback-49"></div>
-    </div>
-    <div class="question">
-        <p>３．テレビを<ruby>見<rt>み</rt></ruby>ます。<ruby>食事<rt>しょくじ</rt></ruby>をします。</p>
-        <input type="text" class="answer-input" id="q50" placeholder="「〜て、」を入力">
-        <div class="answer-feedback" id="feedback-50"></div>
-    </div>
-    <div class="question">
-        <p>４．<ruby>公園<rt>こうえん</rt></ruby>を<ruby>散歩<rt>さんぽ</rt></ruby>します。<ruby>友達<rt>ともだち</rt></ruby>に<ruby>会<rt>あ</rt></ruby>います。</p>
-        <input type="text" class="answer-input" id="q51" placeholder="「〜て、」を入力">
-        <div class="answer-feedback" id="feedback-51"></div>
-    </div>
-    <div class="question">
-        <p>５．<ruby>日本語<rt>にほんご</rt></ruby>を<ruby>勉強<rt>べんきょう</rt></ruby>します。<ruby>音楽<rt>おんがく</rt></ruby>を<ruby>聞<rt>き</rt></ruby>きます。</p>
-        <input type="text" class="answer-input" id="q52" placeholder="「〜て、」を入力">
-        <div class="answer-feedback" id="feedback-52"></div>
-    </div>
-</div>
 
     <div class="question-section" id="section-5" style="display: none;">
-        <div class="question-section" id="section-5">
-    <h2>問題５．て形を使って「V1てから、V2」を作ってください。</h2>
-    <div class="example">
-        <p>れい）<ruby>日本語<rt>にほんご</rt></ruby>を<ruby>勉強<rt>べんきょう</rt></ruby>します。<ruby>ごはん<rt>ごはん</rt></ruby>を<ruby>食<rt>た</rt></ruby>べます。</p>
-        <p>→ <ruby>日本語<rt>にほんご</rt></ruby>を<span class="highlight"><ruby>勉強<rt>べんきょう</rt></ruby>してから、</span><ruby>ごはん<rt>ごはん</rt></ruby>を<ruby>食<rt>た</rt></ruby>べます。</p>
+        <h2>問題５．て形を使って「V1てから、V2」を作ってください。</h2>
+        <div class="example">
+            <p>れい）<ruby>日本語<rt>にほんご</rt></ruby>を<ruby>勉強<rt>べんきょう</rt></ruby>します。<ruby>ごはん<rt>ごはん</rt></ruby>を<ruby>食<rt>た</rt></ruby>べます。</p>
+            <p>→ <ruby>日本語<rt>にほんご</rt></ruby>を<span class="highlight"><ruby>勉強<rt>べんきょう</rt></ruby>してから、</span><ruby>ごはん<rt>ごはん</rt></ruby>を<ruby>食<rt>た</rt></ruby>べます。</p>
+        </div>
+        <div class="question">
+            <p>１．<ruby>本<rt>ほん</rt></ruby>を<ruby>読<rt>よ</rt></ruby>みます。<ruby>寝<rt>ね</rt></ruby>ます。</p>
+            <input type="text" class="answer-input" id="q53" placeholder="「〜てから、」を入力">
+            <div class="answer-feedback" id="feedback-53"></div>
+        </div>
+        <div class="question">
+            <p>２．<ruby>買い物<rt>かいもの</rt></ruby>します。<ruby>家<rt>いえ</rt></ruby>に<ruby>帰<rt>かえ</rt></ruby>ります。</p>
+            <input type="text" class="answer-input" id="q54" placeholder="「〜てから、」を入力">
+            <div class="answer-feedback" id="feedback-54"></div>
+        </div>
+        <div class="question">
+            <p>３．テレビを<ruby>見<rt>み</rt></ruby>ます。<ruby>食事<rt>しょくじ</rt></ruby>をします。</p>
+            <input type="text" class="answer-input" id="q55" placeholder="「〜てから、」を入力">
+            <div class="answer-feedback" id="feedback-55"></div>
+        </div>
+        <div class="question">
+            <p>４．<ruby>公園<rt>こうえん</rt></ruby>を<ruby>散歩<rt>さんぽ</rt></ruby>します。<ruby>友達<rt>ともだち</rt></ruby>に<ruby>会<rt>あ</rt></ruby>います。</p>
+            <input type="text" class="answer-input" id="q56" placeholder="「〜てから、」を入力">
+            <div class="answer-feedback" id="feedback-56"></div>
+        </div>
+        <div class="question">
+            <p>５．<ruby>日本語<rt>にほんご</rt></ruby>を<ruby>勉強<rt>べんきょう</rt></ruby>します。<ruby>音楽<rt>おんがく</rt></ruby>を<ruby>聞<rt>き</rt></ruby>きます。</p>
+            <input type="text" class="answer-input" id="q57" placeholder="「〜てから、」を入力">
+            <div class="answer-feedback" id="feedback-57"></div>
+        </div>
     </div>
-    <div class="question">
-        <p>１．<ruby>本<rt>ほん</rt></ruby>を<ruby>読<rt>よ</rt></ruby>みます。<ruby>寝<rt>ね</rt></ruby>ます。</p>
-        <input type="text" class="answer-input" id="q53" placeholder="「〜てから、」を入力">
-        <div class="answer-feedback" id="feedback-53"></div>
-    </div>
-    <div class="question">
-        <p>２．<ruby>買い物<rt>かいもの</rt></ruby>します。<ruby>家<rt>いえ</rt></ruby>に<ruby>帰<rt>かえ</rt></ruby>ります。</p>
-        <input type="text" class="answer-input" id="q54" placeholder="「〜てから、」を入力">
-        <div class="answer-feedback" id="feedback-54"></div>
-    </div>
-    <div class="question">
-        <p>３．テレビを<ruby>見<rt>み</rt></ruby>ます。<ruby>食事<rt>しょくじ</rt></ruby>をします。</p>
-        <input type="text" class="answer-input" id="q55" placeholder="「〜てから、」を入力">
-        <div class="answer-feedback" id="feedback-55"></div>
-    </div>
-    <div class="question">
-        <p>４．<ruby>公園<rt>こうえん</rt></ruby>を<ruby>散歩<rt>さんぽ</rt></ruby>します。<ruby>友達<rt>ともだち</rt></ruby>に<ruby>会<rt>あ</rt></ruby>います。</p>
-        <input type="text" class="answer-input" id="q56" placeholder="「〜てから、」を入力">
-        <div class="answer-feedback" id="feedback-56"></div>
-    </div>
-    <div class="question">
-        <p>５．<ruby>日本語<rt>にほんご</rt></ruby>を<ruby>勉強<rt>べんきょう</rt></ruby>します。<ruby>音楽<rt>おんがく</rt></ruby>を<ruby>聞<rt>き</rt></ruby>きます。</p>
-        <input type="text" class="answer-input" id="q57" placeholder="「〜てから、」を入力">
-        <div class="answer-feedback" id="feedback-57"></div>
-    </div>
-</div>
 
     <div class="button-container">
         <button id="submit-test" type="button" style="display: none;">テストを提出する</button>
@@ -575,17 +576,19 @@
             <h2>パスワードを入力してください</h2>
             <input type="password" id="password-input" placeholder="パスワードを入力">
             <div>
-                <button onclick="window.checkPassword()">Xác nhận</button>
-                <button onclick="window.closePasswordModal()">キャンセル</button>
+                <button id="confirm-password">Xác nhận</button>
+                <button id="cancel-password">キャンセル</button>
             </div>
             <div id="password-error" class="password-error"></div>
         </div>
     </div>
 
     <script>
+        // Initialize Firebase loading flags
         let appLoaded = false;
         let firestoreLoaded = false;
 
+        // Firebase script load handlers
         function firebaseAppLoaded() {
             appLoaded = true;
             checkAllScriptsLoaded();
@@ -596,16 +599,18 @@
             checkAllScriptsLoaded();
         }
 
+        // Check if all Firebase scripts are loaded
         function checkAllScriptsLoaded() {
             if (appLoaded && firestoreLoaded) {
                 initializeFirebase();
             }
         }
 
+        // Initialize Firebase
         function initializeFirebase() {
             if (!appLoaded || !firestoreLoaded || typeof firebase === 'undefined' || typeof firebase.firestore !== 'function') {
                 console.error('Firebase SDK or Firestore not loaded');
-                document.getElementById('message-result').textContent = 'エラー: Firebase SDKまたはFirestoreをロードできませんでした。もう一度お試しください。';
+                document.getElementById('message-result').textContent = 'エラー: Firebase SDKまたはFirestoreをロードできませんでした。';
                 return;
             }
 
@@ -624,7 +629,7 @@
             firebase.initializeApp(firebaseConfig);
             const db = firebase.firestore();
 
-            // Define saveTestResult
+            // Save test result to Firestore
             async function saveTestResult(name, className, date, score, percentage) {
                 try {
                     await db.collection('testHistorytekeirenshuu').add({
@@ -638,11 +643,11 @@
                     console.log('Test result saved successfully');
                 } catch (error) {
                     console.error('Error saving test result: ', error);
-                    document.getElementById('message-result').textContent = 'Firestoreに結果を保存中にエラーが発生しました。もう一度お試しください。';
+                    document.getElementById('message-result').textContent = 'Firestoreに結果を保存中にエラーが発生しました。';
                 }
             }
 
-            // Define checkAnswers
+            // Check answers and display results
             function checkAnswers() {
                 const name = document.getElementById('name').value.trim();
                 const className = document.getElementById('class').value.trim();
@@ -651,7 +656,7 @@
                 const totalQuestions = 57;
 
                 for (let i = 1; i <= totalQuestions; i++) {
-                    const userAnswer = document.getElementById(`q${i}`).value.trim();
+                    const userAnswer = document.getElementById(`q${i}`)?.value.trim();
                     const feedbackElement = document.getElementById(`feedback-${i}`);
                     if (userAnswer === answerKey[i]) {
                         feedbackElement.textContent = "正しい！";
@@ -667,8 +672,8 @@
                 document.getElementById("message-result").textContent = '';
                 document.getElementById("score-display").innerHTML = `
                     <div class="button-container">
-                        <button id="history-test-result" onclick="window.showPasswordModal()">Lịch sử kiểm tra</button>
-                        <button id="reset-test-result" class="reset" onclick="window.resetTest()">Làm lại</button>
+                        <button id="history-test-result">Lịch sử kiểm tra</button>
+                        <button id="reset-test-result" class="reset">Làm lại</button>
                     </div>
                     <p>得点: ${score} / ${totalQuestions} (${percentage.toFixed(1)}%)</p>
                 `;
@@ -676,74 +681,93 @@
                 document.getElementById("submit-test").style.display = "none";
                 document.getElementById("reset-test").style.display = "none";
 
+                // Re-attach event listeners for result buttons
+                document.getElementById('history-test-result').addEventListener('click', showPasswordModal);
+                document.getElementById('reset-test-result').addEventListener('click', resetTest);
+
                 // Save the test result
                 saveTestResult(name, className, date, score, percentage);
             }
 
-            // Attach event listener
+            // Attach submit event listener
             document.getElementById('submit-test').addEventListener('click', checkAnswers);
         }
 
+        // Answer key for all questions
         const answerKey = {
-    1: "かいて", // 書きます
-    2: "きいて", // 聞きます
-    3: "いって", // 行きます
-    4: "いそいで", // 急ぎます
-    5: "およいで", // 泳ぎます
-    6: "のんで", // 飲みます
-    7: "よんで", // 読みます
-    8: "やすんで", // 休みます
-    9: "よんで", // 呼びます
-    10: "あそんで", // 遊びます
-    11: "かえって", // 帰ります
-    12: "とって", // 取ります
-    13: "かかって", // かかります
-    14: "かって", // 買います
-    15: "あって", // 会います
-    16: "ならって", // 習います
-    17: "もって", // 持ちます
-    18: "まって", // 待ちます
-    19: "はなして", // 話します
-    20: "けして", // 消します
-    21: "たべて", // 食べます
-    22: "ねて", // 寝ます
-    23: "おしえて", // 教えます
-    24: "みせて", // 見せます
-    25: "あけて", // 開けます
-    26: "しめて", // 閉めます
-    27: "つけて", // つけます
-    28: "みて", // 見ます
-    29: "いて", // います
-    30: "おきて", // 起きます
-    31: "かりて", // 借ります
-    32: "して", // します
-    33: "べんきょうして", // 勉強します
-    34: "さんぽして", // 散歩します
-    35: "かいものして", // 買い物します
-    36: "しょくじして", // 食事します
-    37: "きて", // 来ます
-    38: "ほんをよんでください。", // 本を読みます
-    39: "ドアをあけてください。", // ドアを開けます
-    40: "おんがくをきいてください。", // 音楽を聞きます
-    41: "にほんごではなしてください。", // 日本語で話します
-    42: "みずをのんでください。", // 水を飲みます
-    43: "いま、ほんをよんでいます。", // 本を読んでいます
-    44: "いま、テレビをみています。", // テレビを見ています
-    45: "いま、ともだちとはなしています。", // 友達と話しています
-    46: "いま、プールでおよいでいます。", // プールで泳いでいます
-    47: "いま、かいものしています。", // 買い物をしています
-    48: "ほんをよんで、ねます。", // 本を読んで、寝ます
-    49: "かいものして、いえにかえります。", // 買い物して、家に帰ります
-    50: "テレビをみて、しょくじします。", // テレビを見て、食事します
-    51: "こうえんをさんぽして、ともだちにあいます。", // 公園を散歩して、友達に会います
-    52: "にほんごをべんきょうして、おんがくをききます。", // 日本語を勉強して、音楽を聞きます
-    53: "ほんをよんでから、ねます。", // 本を読んでから、寝ます
-    54: "かいものしてから、いえにかえります。", // 買い物してから、家に帰ります
-    55: "テレビをみてから、しょくじします。", // テレビを見てから、食事します
-    56: "こうえんをさんぽしてから、ともだちにあいます。", // 公園を散歩してから、友達に会います
-    57: "にほんごをべんきょうしてから、おんがくをききます。" // 日本語を勉強してから、音楽を聞きます
-};
+            1: "かいて", // 書きます
+            2: "きいて", // 聞きます
+            3: "いって", // 行きます
+            4: "いそいで", // 急ぎます
+            5: "およいで", // 泳ぎます
+            6: "のんで", // 飲みます
+            7: "よんで", // 読みます
+            8: "やすんで", // 休みます
+            9: "よんで", // 呼びます
+            10: "あそんで", // 遊びます
+            11: "かえって", // 帰ります
+            12: "とって", // 取ります
+            13: "かかって", // かかります
+            14: "かって", // 買います
+            15: "あって", // 会います
+            16: "ならって", // 習います
+            17: "もって", // 持ちます
+            18: "まって", // 待ちます
+            19: "はなして", // 話します
+            20: "けして", // 消します
+            21: "たべて", // 食べます
+            22: "ねて", // 寝ます
+            23: "おしえて", // 教えます
+            24: "みせて", // 見せます
+            25: "あけて", // 開けます
+            26: "しめて", // 閉めます
+            27: "つけて", // つけます
+            28: "みて", // 見ます
+            29: "いて", // います
+            30: "おきて", // 起きます
+            31: "かりて", // 借ります
+            32: "して", // します
+            33: "べんきょうして", // 勉強します
+            34: "さんぽして", // 散歩します
+            35: "かいものして", // 買い物します
+            36: "しょくじして", // 食事します
+            37: "きて", // 来ます
+            38: "ほんをよんでください。", // 本を読みます
+            39: "ドアをあけてください。", // ドアを開けます
+            40: "おんがくをきいてください。", // 音楽を聞きます
+            41: "にほんごではなしてください。", // 日本語で話します
+            42: "みずをのんでください。", // 水を飲みます
+            43: "いま、ほんをよんでいます。", // 本を読んでいます
+            44: "いま、テレビをみています。", // テレビを見ています
+            45: "いま、ともだちとはなしています。", // 友達と話しています
+            46: "いま、プールでおよいでいます。", // プールで泳いでいます
+            47: "いま、かいものしています。", // 買い物をしています
+            48: "ほんをよんで、ねます。", // 本を読んで、寝ます
+            49: "かいものして、いえにかえります。", // 買い物して、家に帰ります
+            50: "テレビをみて、しょくじします。", // テレビを見て、食事します
+            51: "こうえんをさんぽして、ともだちにあいます。", // 公園を散歩して、友達に会います
+            52: "にほんごをべんきょうして、おんがくをききます。", // 日本語を勉強して、音楽を聞きます
+            53: "ほんをよんでから、ねます。", // 本を読んでから、寝ます
+            54: "かいものしてから、いえにかえります。", // 買い物してから、家に帰ります
+            55: "テレビをみてから、しょくじします。", // テレビを見てから、食事します
+            56: "こうえんをさんぽしてから、ともだちにあいます。", // 公園を散歩してから、友達に会います
+            57: "にほんごをべんきょうしてから、おんがくをききます。" // 日本語を勉強してから、音楽を聞きます
+        };
 
+        // Show password modal
+        function showPasswordModal() {
+            try {
+                const modal = document.getElementById('password-modal');
+                if (!modal) throw new Error('Password modal not found');
+                modal.style.display = 'flex';
+                document.getElementById('password-input').focus();
+            } catch (error) {
+                console.error('Error in showPasswordModal:', error);
+                document.getElementById('message-result').textContent = 'モーダルを表示できませんでした。';
+            }
+        }
+
+        // Check password and redirect
         function checkPassword() {
             const passwordInput = document.getElementById('password-input').value.trim();
             const passwordError = document.getElementById('password-error');
@@ -755,17 +779,17 @@
             }
         }
 
-        function showPasswordModal() {
-            document.getElementById('password-modal').style.display = 'flex';
-            document.getElementById('password-input').focus();
-        }
-
+        // Close password modal
         function closePasswordModal() {
-            document.getElementById('password-modal').style.display = 'none';
-            document.getElementById('password-input').value = '';
-            document.getElementById('password-error').textContent = '';
+            const modal = document.getElementById('password-modal');
+            if (modal) {
+                modal.style.display = 'none';
+                document.getElementById('password-input').value = '';
+                document.getElementById('password-error').textContent = '';
+            }
         }
 
+        // Reset test
         function resetTest() {
             document.getElementById('name').value = '';
             document.getElementById('class').value = '';
@@ -787,12 +811,8 @@
             });
         }
 
-        window.checkPassword = checkPassword;
-        window.showPasswordModal = showPasswordModal;
-        window.closePasswordModal = closePasswordModal;
-        window.resetTest = resetTest;
-
-        document.getElementById('start-test').addEventListener('click', () => {
+        // Start test
+        function startTest() {
             const name = document.getElementById('name').value.trim();
             const className = document.getElementById('class').value.trim();
             const dateInput = document.getElementById('date').value;
@@ -814,15 +834,25 @@
             document.getElementById('section-5').style.display = 'block';
             document.getElementById('submit-test').style.display = 'block';
             document.getElementById('reset-test').style.display = 'block';
+        }
+
+        // Attach event listeners
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('start-test').addEventListener('click', startTest);
+            document.getElementById('history-test').addEventListener('click', showPasswordModal);
+            document.getElementById('confirm-password').addEventListener('click', checkPassword);
+            document.getElementById('cancel-password').addEventListener('click', closePasswordModal);
         });
 
-        // Initialize Firebase
+        // Initialize Firebase on load
         window.onload = function() {
-            if (appLoaded && firestoreLoaded) {
-                initializeFirebase();
-            } else {
-                document.getElementById('message-result').textContent = 'Firebase SDKを読み込み中...';
-            }
+            setTimeout(() => {
+                if (!appLoaded || !firestoreLoaded) {
+                    document.getElementById('message-result').textContent = 'Firebase SDKの読み込みに失敗しました。';
+                } else {
+                    initializeFirebase();
+                }
+            }, 5000);
         };
     </script>
 
